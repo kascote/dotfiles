@@ -1,0 +1,1 @@
+ssh -i ~/bin/kpanic2.ssh -p 10022 nelson@192.168.0.103

@@ -1,0 +1,7 @@
+Some config files and bash script I use every day
+
+Install with
+   rake install:bin
+   rake install:dot
+
+

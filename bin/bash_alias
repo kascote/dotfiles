@@ -1,0 +1,67 @@
+###########
+# GENERAL #
+###########
+export TERM=xterm-color
+alias l='ls -lh' # l for list style, a for all including hidden, h for human readable file sizes
+alias la='l -a' # l for list style, a for all including hidden, h for human readable file sizes
+alias lo='l -ot' # order by time
+alias h='history' # shortcut for history
+alias c='clear' # shortcut to clear your terminal
+alias ..='cd ..' # move up 1 dir
+alias ...='cd ../..' # move up 2 dirs
+alias rbash='source ~/bin/bash_alias' # after editing you have to source it for the new stuff to work
+alias sd='svn diff | vimdiff -'
+alias ducks='du -cksh * | sort -rn|head -11' # Lists folders and files sizes in the current folder
+alias grep='grep --color=auto'
+alias ssv='./script/server'  # start rails server
+alias ssc='./script/console'  # start rails server
+alias tlog='tail -f log/development.log'
+alias rst='touch tmp/restart.txt'
+# Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
+alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
+
+export PATH=$PATH:/opt/ruby-enterprise/bin
+
+export HISTCONTROL=ignoredups
+# Maximum number of events saved between sessions
+HISTFILESIZE=100000
+# Maximum number of events saved during a session
+HISTSIZE=100000
+
+export EDITOR='vim'  #Command line
+export SVN_EDITOR='${EDITOR}'
+# bash completion settings (actually, these are readline settings)
+bind "set completion-ignore-case on" # note: bind used instead of sticking these in .inputrc
+bind "set bell-style none"
+bind "set show-all-if-ambiguous On"
+
+set -o vi
+
+#search on history.... ![number] to execute command on history
+function hf()
+{
+  history | grep $1
+}
+
+function sf()
+{
+#  svn st | grep \?
+  svn st | grep \? | sed '/images\/[0-9]\+$/d' | sed '/\.swp/d'
+}
+
+# search for a rails route
+function rro()
+{
+  rake routes | grep $1
+}
+
+SSH_COMPLETE=( $(cat ~/.ssh/known_hosts | \
+  cut -f 1 -d ' ' | \
+  sed -e s/,.*//g | \
+  uniq | \
+  egrep -v [0123456789]) )
+complete -o default -W "${SSH_COMPLETE[*]}" ssh
+
+#PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[31m\]$(__git_ps1 "(%s)")\[\033[00m\]\n$ '
+
+. ~/bin/bash_prompt2

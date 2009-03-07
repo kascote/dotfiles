@@ -1,0 +1,6 @@
+#!/bin/sh
+# speed up firefox's dbs
+for f in ~/.mozilla/firefox/*/*.sqlite; do 
+  echo $f
+  sqlite3 $f 'VACUUM;';
+done

@@ -1,0 +1,3 @@
+#add new type to search for ERB templates
+--type-set
+ror_tmpl=.erb,.haml,.saas
