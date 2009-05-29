@@ -1,4 +1,4 @@
-#!/opt/ruby-enterprise/bin/ruby
+#!/usr/bin/ruby1.9
 require 'uri'
 #
 #uri = "gvim://open?url=file:///opt/ruby-enterprise/lib/ruby/gems/1.8/gems/activerecord-2.3.2/lib/active_record/reflection.rb&line=156"

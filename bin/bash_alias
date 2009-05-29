@@ -58,6 +58,11 @@ function rro()
   rake routes | grep $1
 }
 
+# git diff is using vimdif... this function is to get original git diff functionality
+function git_diff() {
+  git diff --no-ext-diff -w "$@" | vim -R -
+}
+
 SSH_COMPLETE=( $(cat ~/.ssh/known_hosts | \
   cut -f 1 -d ' ' | \
   sed -e s/,.*//g | \

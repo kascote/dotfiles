@@ -4,3 +4,4 @@ for f in ~/.mozilla/firefox/*/*.sqlite; do
   echo $f
   sqlite3 $f 'VACUUM;';
 done
+notify-send "Vacumm" "fin optimización" --icon=/home/nelson/.icons/gnome-brave/scalable/apps/firefox-3.0.svg
