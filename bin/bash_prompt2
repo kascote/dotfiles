@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#user=`whoami`
-#host=$(echo -n $HOSTNAME | sed -e "s/[\.].*//")
 export black="\[\033[0;38;5;0m\]"
 #export red="\[\033[0;38;5;1m\]"
 export redb="\[\033[1;38;5;1m\]"
@@ -17,13 +15,6 @@ export smoothblue="\[\033[0;38;5;111m\]"
 export iceblue="\[\033[0;38;5;45m\]"
 #export turqoise="\[\033[0;38;5;50m\]"
 #export smoothgreen="\[\033[0;38;5;42m\]"
-
-
-#function git-need-to-push() {
-#  if pushtime=`echo $1 | grep 'Your branch is ahead' 2> /dev/null)`; then
-#    echo " ↑ "
-#  fi
-#}
 
 function git-prompt() {
   branch="$(__git_ps1 %s)"
@@ -42,21 +33,14 @@ function git-prompt() {
   fi
 }
 
-
-#git_repo='$(__git_ps1 "%s")'
 git_repo="\$(git-prompt)"
 if [ "$USERNAME" == "root" ]
 then
-  #una="$redb\u@\h$black"
   una="$redb\$$black"
 else
-  #una="$smoothblue\u@\h$black"
   una="$smoothblue\$$black"
 fi
+
 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME} - ${PWD}\007"'
-#PS1="$black┌─($iceblue\${PWD}$black)─\${fill}─($una)────\n$black└─($red$git_repo$black)─>$white "
-#PS1="$black┌[$una]─[$iceblue\${PWD}$black]\n$black└[$yellowb$git_repo$black]─>$white\[\033[0m\] "
-#PS1="$yellowb$git_repo$black $una>$white\[\033[0m\] "
-#PS1="$git_repo$black $una>$white\[\033[0m\] "
 PS1="$git_repo$una>\[\033[0m\]"
 
