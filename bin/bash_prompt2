@@ -22,7 +22,7 @@ function git-prompt() {
     dirty_color="\033[1;38;5;3m"
     gstatus=`git --no-pager status 2> /dev/null`
     push_status=""
-    if pushtime=`echo $1 | grep 'Your branch is ahead' 2> /dev/null`; then
+    if pushtime=`echo $gstatus | grep 'Your branch is ahead' 2> /dev/null`; then
       push_status=" ↑"
     fi
     dirty=`echo $gstatus | grep 'nothing to commit (working directory clean)' > /dev/null; echo $?`
