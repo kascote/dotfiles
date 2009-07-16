@@ -26,6 +26,11 @@ alias psgrep='ps aux|grep'
 alias reload='source ~/.bashrc'
 alias le='less -f -r'
 
+
+alias gw="git whatchanged -p"
+alias gl="git log --graph"
+
+
 export PATH=$PATH:/opt/ruby-enterprise/bin
 
 export HISTCONTROL=ignoredups
