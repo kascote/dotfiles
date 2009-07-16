@@ -42,5 +42,6 @@ else
 fi
 
 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME} - ${PWD}\007"'
-PS1="$git_repo$una>\[\033[0m\]\e[0m"
+#PS1="$git_repo$una>\[\033[0m\]\e[0m"
+PS1="$git_repo$una>\[\033[0m\]"
 
