@@ -8,6 +8,7 @@
 CTAGS = '/usr/bin/ctags'
 HOOKS = %w{ post-merge post-commit }
 HOOKS_DIR = '.git/hooks'
+TAGS_FILENAME = 'vim_tags'
  
 def install
   if !File.writable?(HOOKS_DIR)
@@ -20,9 +21,9 @@ end
  
 def run_tags(dir)
   if File.executable?(CTAGS) and File.writable?(dir)
-    %x{find #{dir} -name \\*.rb | #{CTAGS} -f #{dir}/tags -L - 2>>/dev/null}
+    %x{find #{dir} -name \\*.rb | #{CTAGS} -f #{dir}/#{TAGS_FILENAME} -L - 2>>/dev/null}
   else
-    $stderr.print "FAILED to write TAGS file to #{dir}\n"
+    $stderr.print "FAILED to write #{TAGS_FILENAME} file to #{dir}\n"
   end
 end
  
