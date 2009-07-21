@@ -1,0 +1,3 @@
+# hace que el touchpad se desabilita mientras se escribe
+# para evitar movimientos del cursor indeseados
+syndaemon -K -d -i 1
