@@ -5,38 +5,46 @@ export black="\[\033[0;38;5;0m\]"
 export redb="\[\033[1;38;5;1m\]"
 #export green="\[\033[0;38;5;2m\]"
 #export yellow="\[\033[0;38;5;3m\]"
-export yellowb="\[\033[1;38;5;3m\]"
+#export yellowb="\[\033[1;38;5;3m\]"
 #export blue="\[\033[0;38;5;4m\]"
 #export magenta="\[\033[0;38;5;55m\]"
 #export cyan="\[\033[0;38;5;6m\]"
-export white="\[\033[0;38;5;7m\]"
+#export white="\[\033[0;38;5;7m\]"
 #export coldblue="\[\033[0;38;5;33m\]"
 export smoothblue="\[\033[0;38;5;111m\]"
-export iceblue="\[\033[0;38;5;45m\]"
+#export iceblue="\[\033[0;38;5;45m\]"
 #export turqoise="\[\033[0;38;5;50m\]"
 #export smoothgreen="\[\033[0;38;5;42m\]"
 
-gstatus=`git --no-pager status 2> /dev/null`
-branch='$(__git_ps1 %s)'
-if [[ x$branch != x ]]; then
-  echo '.'
-  dirty_color=$yellowb
-  if pushtime=`echo $1 | grep 'Your branch is ahead' 2> /dev/null`; then
-    push_status=" ↑ "
+function git-prompt() {
+  branch="$(__git_ps1 %s)"
+  if [[ x$branch != x ]]; then
+    dirty_color="\033[1;38;5;3m"
+    gstatus=`git --no-pager status 2> /dev/null`
+    push_status=""
+    if pushtime=`echo $gstatus | grep 'Your branch is ahead' 2> /dev/null`; then
+      push_status=" ↑"
+    fi
+    dirty=`echo $gstatus | grep 'nothing to commit (working directory clean)' > /dev/null; echo $?`
+    if [[ $dirty = 1 ]]; then
+      dirty_color="\033[1;38;5;1m"
+    fi
+    echo -en "$dirty_color$branch$push_status "
   fi
-  dirty=`echo $gstatus | grep 'nothing to commit (working directory clean)' > /dev/null; echo $?`
-  if [[ $dirty == 1 ]]; then
-    dirty_color=$redb
-  fi
-  git_prompt="$dirty_color $push_status"
-fi
+}
 
-if [ "$USERNAME" == "root" ]
-then
-  una="$redb\$$black"
-else
-  una="$smoothblue\$$black"
-fi
-PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME} - ${PWD}\007"'
-PS1="$git_prompt$branch$push_status$black $una>$white\[\033[0m\] "
-#PS1="$branch$push_status$black $una>$white\[\033[0m\] "
+function prompt_command_function() {
+
+  git_repo="\$(git-prompt)"
+  if [ "$USERNAME" == "root" ]
+  then
+    una="$redb\$"
+  else
+    una="$smoothblue\$"
+  fi
+
+  eval 'echo -ne "\033]0;${USER}@${HOSTNAME} - ${PWD}\007"'
+  PS1="$git_repo$una > \[\033[0m\]"
+}
+
+PROMPT_COMMAND=prompt_command_function

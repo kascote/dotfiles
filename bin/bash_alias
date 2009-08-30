@@ -13,8 +13,8 @@ alias rbash='source ~/bin/bash_alias' # after editing you have to source it for 
 alias sd='svn diff | vimdiff -'
 alias ducks='du -cksh * | sort -rn|head -11' # Lists folders and files sizes in the current folder
 alias grep='grep --color=auto'
-alias ssv='./script/server'  # start rails server
-alias ssc='./script/console'  # start rails server
+alias ss='./script/server'  # start rails server
+alias sc='./script/console'  # start rails server
 alias tlog='tail -f log/development.log'
 alias rst='touch tmp/restart.txt'
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
@@ -86,4 +86,4 @@ complete -o default -W "${SSH_COMPLETE[*]}" ssh
 
 #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[31m\]$(__git_ps1 "(%s)")\[\033[00m\]\n$ '
 
-. ~/bin/bash_prompt2
+. ~/bin/bash_prompt3
