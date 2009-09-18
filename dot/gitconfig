@@ -22,6 +22,7 @@
   untracked = cyan
 [alias]
   co = checkout
+	unadd = reset HEAD
 [core]
   editor = vim
 [apply]
