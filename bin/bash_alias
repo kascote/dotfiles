@@ -22,6 +22,7 @@ alias reload='source ~/.bashrc'
 alias le='less -f -r'
 #search on history.... ![number] to execute command on history
 alias hf='history | grep $1'
+alias go='gnome-open'
 
 # --------[ Rails ]-----------------------------------------------------------------
 alias ss='./script/server'               
