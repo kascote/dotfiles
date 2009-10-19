@@ -35,7 +35,7 @@ function git-prompt() {
 
 function prompt_command_function() {
 
-  git_repo="\$(git-prompt)"
+  #git_repo="\$(git-prompt)"
   if [ "$USERNAME" == "root" ]
   then
     una="$redb\$"
@@ -44,7 +44,8 @@ function prompt_command_function() {
   fi
 
   eval 'echo -ne "\033]0;${USER}@${HOSTNAME} - ${PWD}\007"'
-  PS1="$git_repo$una > \[\033[0m\]"
+  #PS1="$git_repo$una > \[\033[0m\]"
+  PS1="${GIT_STATUS}${una}> \[\e[0m\]"
 }
 
 PROMPT_COMMAND=prompt_command_function

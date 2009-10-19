@@ -17,12 +17,14 @@ alias grep='grep --color=auto'
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
 #alias apti="aptitude -F \"%p %V %v\" search "  # show the instaled version and the available one
 alias apti="aptitude -F \"%c%a%M%S %p %Z %v %V\" search "  # show the instaled version and the available one
+#alias ps="ps wwwax -o user,pid,ppid,cpu,nice,state,command"
 alias psgrep='ps aux|grep'
 alias reload='source ~/.bashrc'
 alias le='less -f -r'
 #search on history.... ![number] to execute command on history
 alias hf='history | grep $1'
 alias go='gnome-open'
+alias gn='find . -iname'
 
 # --------[ Rails ]-----------------------------------------------------------------
 alias ss='./script/server'               
@@ -80,5 +82,36 @@ SSH_COMPLETE=( $(cat ~/.ssh/known_hosts | \
 complete -o default -W "${SSH_COMPLETE[*]}" ssh
 
 #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[31m\]$(__git_ps1 "(%s)")\[\033[00m\]\n$ '
+
+# taked from http://github.com/mikewest/homedir/blob/master/etc/bash/rc/git
+function git_status_prompt {
+    local curdir=`pwd`
+    local repository_base="/vault/Projects"
+    [[ ! $curdir =~ ^$repository_base ]] && return
+    git rev-parse --git-dir &> /dev/null
+    git_status="$(git status 2> /dev/null)"
+    branch_pattern="^# On branch ([^${IFS}]*)"
+    remote_pattern="# Your branch is (.*) of"
+    diverge_pattern="# Your branch and (.*) have diverged"
+    if [[ ! ${git_status} =~ "working directory clean" ]]; then
+        state="⚡ "
+    fi
+    if [[ ${git_status} =~ ${remote_pattern} ]]; then
+        if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
+            remote="↑ "
+        else
+            remote="↓ "
+        fi
+    fi
+    if [[ ${git_status} =~ ${diverge_pattern} ]]; then
+        remote="↕ "
+    fi
+    if [[ ${git_status} =~ ${branch_pattern} ]]; then
+        branch="(${BASH_REMATCH[1]}) "
+        # [ "$branch" = "(master) " ] && branch=''
+        echo "${branch}${remote}${state}"
+    fi
+}
+GIT_STATUS='$(git_status_prompt)'
 
 . ~/bin/bash_prompt3
