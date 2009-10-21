@@ -1,8 +1,8 @@
 #!/bin/bash
 
-export black="\[\033[0;38;5;0m\]"
+#export black="\[\033[0;38;5;0m\]"
 #export red="\[\033[0;38;5;1m\]"
-export redb="\[\033[1;38;5;1m\]"
+#export redb="\[\033[1;38;5;1m\]"
 #export green="\[\033[0;38;5;2m\]"
 #export yellow="\[\033[0;38;5;3m\]"
 #export yellowb="\[\033[1;38;5;3m\]"
@@ -11,7 +11,7 @@ export redb="\[\033[1;38;5;1m\]"
 #export cyan="\[\033[0;38;5;6m\]"
 #export white="\[\033[0;38;5;7m\]"
 #export coldblue="\[\033[0;38;5;33m\]"
-export smoothblue="\[\033[0;38;5;111m\]"
+#export smoothblue="\[\033[0;38;5;111m\]"
 #export iceblue="\[\033[0;38;5;45m\]"
 #export turqoise="\[\033[0;38;5;50m\]"
 #export smoothgreen="\[\033[0;38;5;42m\]"
@@ -38,14 +38,14 @@ function prompt_command_function() {
   #git_repo="\$(git-prompt)"
   if [ "$USERNAME" == "root" ]
   then
-    una="$redb\$"
+    una="\[\033[0;38;5;196m\]"
   else
-    una="$smoothblue\$"
+    una="\[\033[0;38;5;130m\]"
   fi
 
   eval 'echo -ne "\033]0;${USER}@${HOSTNAME} - ${PWD}\007"'
   #PS1="$git_repo$una > \[\033[0m\]"
-  PS1="${GIT_STATUS}${una}> \[\e[0m\]"
+  PS1="${GIT_STATUS}${una}\$> \[\e[0m\]"
 }
 
 PROMPT_COMMAND=prompt_command_function

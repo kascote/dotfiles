@@ -15,7 +15,7 @@
   meta = yellow bold
   frag = magenta bold
   old = red bold
-  new = green bold
+  new = cyan
 [color "status"]
   added = yellow
   changed = green
@@ -23,6 +23,12 @@
 [alias]
   co = checkout
 	unadd = reset HEAD
+  st = status
+  ds = diff --stat -r
+  lg = log --graph --pretty=oneline --abbrev-commit
+  lc = log ORIG_HEAD.. --stat --no-merges
+  edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
+  add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
 [core]
   editor = vim
 [apply]
