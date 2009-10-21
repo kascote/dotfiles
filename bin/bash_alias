@@ -64,6 +64,8 @@ set output-meta on
 # no convert output to ascii, use eight bits
 set convert-meta off
 
+eval `dircolors ~/bin/colors_db`
+
 #function sf()
 #{
 #  svn st | grep \? | sed '/images\/[0-9]\+$/d' | sed '/\.swp/d'
