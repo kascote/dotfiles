@@ -12,9 +12,9 @@
   local = yellow
   remote = green
 [color "diff"]
-  meta = yellow bold
-  frag = magenta bold
-  old = red bold
+  meta = yellow
+  frag = magenta
+  old = red
   new = cyan
 [color "status"]
   added = yellow
@@ -22,14 +22,20 @@
   untracked = cyan
 [alias]
   co = checkout
+  ci = commit
 	unadd = reset HEAD
   st = status
   ds = diff --stat -r
+  df = diff
   lg = log --graph --pretty=oneline --abbrev-commit
   lc = log ORIG_HEAD.. --stat --no-merges
   edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
   add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+  ptb = push origin HEAD
+  conflict = log --merge --left-right -p
 [core]
   editor = vim
 [apply]
   whitespace = nowarn
+[push]
+  default = matching
