@@ -2,16 +2,18 @@
 # GENERAL #
 ###########
 export TERM=xterm-color
-alias l='ls -lh' # l for list style, a for all including hidden, h for human readable file sizes
-alias la='l -a' # l for list style, a for all including hidden, h for human readable file sizes
-alias lo='l -ot' # order by time
-alias h='history' # shortcut for history
-alias c='clear' # shortcut to clear your terminal
-alias ..='cd ..' # move up 1 dir
-alias ...='cd ../..' # move up 2 dirs
-alias ....='cd ../../..' # move up 3 dirs
-alias rbash='source ~/bin/bash_alias' # after editing you have to source it for the new stuff to work
+alias l='ls -lh'                             # l for list style, a for all including hidden, h for human readable file sizes
+alias la='l -a'                              # l for list style, a for all including hidden, h for human readable file sizes
+alias lo='l -ot'                             # order by time
+alias l.="ls -d .*"                          # show only dirs
+alias h='history'                            # shortcut for history
+alias c='clear'                              # shortcut to clear your terminal
+alias ..='cd ..'                             # move up 1 dir
+alias ...='cd ../..'                         # move up 2 dirs
+alias ....='cd ../../..'                     # move up 3 dirs
+alias rbash='source ~/bin/bash_alias'        # after editing you have to source it for the new stuff to work
 alias ducks='du -cksh * | sort -rn|head -11' # Lists folders and files sizes in the current folder
+alias du1='du -h --max-depth=1'
 alias grep='grep --color=auto'
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
@@ -20,9 +22,8 @@ alias apti="aptitude -F \"%c%a%M%S %p %Z %v %V\" search "  # show the instaled v
 #alias ps="ps wwwax -o user,pid,ppid,cpu,nice,state,command"
 alias psgrep='ps aux|grep'
 alias reload='source ~/.bashrc'
-alias le='less -f -r'
+alias le='less -fir'
 #search on history.... ![number] to execute command on history
-alias hf='history | grep $1'
 alias go='gnome-open'
 alias gn='find . -iname'
 
@@ -31,7 +32,6 @@ alias ss='./script/server'
 alias sc='./script/console'              
 alias tlog='tail -f log/development.log'
 alias rst='touch tmp/restart.txt'
-alias rro='rake routes | grep $1'        
 
 # --------[ GIT ]-----------------------------------------------------------------
 alias gw="git whatchanged -p"
@@ -44,17 +44,22 @@ export PATH=$PATH:/opt/ruby-enterprise/bin
 
 export HISTCONTROL=ignoredups
 # Maximum number of events saved between sessions
-HISTFILESIZE=100000
+export HISTFILESIZE=100000
 # Maximum number of events saved during a session
-HISTSIZE=100000
-
+export HISTSIZE=100000
 export EDITOR='vim'  #Command line
 export SVN_EDITOR='${EDITOR}'
+export PAGER='less -firwX'
+export MANPAGER='less -firwX'
 
 # bash completion settings (actually, these are readline settings)
 bind "set completion-ignore-case on" # note: bind used instead of sticking these in .inputrc
 bind "set bell-style none"
 bind "set show-all-if-ambiguous On"
+
+# shell options
+shopt -s no_empty_cmd_completion >/dev/null 2>&1
+
 
 set -o vi
 # enable support for eight bits characters
@@ -70,7 +75,14 @@ eval `dircolors ~/bin/colors_db`
 #{
 #  svn st | grep \? | sed '/images\/[0-9]\+$/d' | sed '/\.swp/d'
 #}
-
+function hf()
+{
+  history | grep $1
+}
+function rro()
+{
+  rake routes | grep $1
+}
 # git diff is using vimdif... this function is to get original git diff functionality
 function git_diff() {
   git diff --no-ext-diff -w "$@" | vim -R -
