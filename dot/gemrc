@@ -1,10 +1,12 @@
 --- 
+:verbose: true
+:bulk_threshold: 1000
 gem: --no-ri --no-rdoc
+gemcutter_key: 89a3803c5d5c0a0c0b2cbd752486c1c7
 :sources: 
+- http://gemcutter.org
 - http://gems.rubyforge.org/
 - http://gems.github.com
-:update_sources: true
 :benchmark: false
-:bulk_threshold: 1000
 :backtrace: false
-:verbose: true
+:update_sources: true
