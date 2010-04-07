@@ -1,0 +1,3 @@
+#!/bin/sh
+
+gvim --remote-silent "$1"

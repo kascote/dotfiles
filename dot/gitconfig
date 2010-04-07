@@ -39,3 +39,9 @@
   whitespace = nowarn
 [push]
   default = matching
+[giggle]
+	main-window-maximized = false
+	main-window-geometry = 1131x1009+435+24
+	history-view-vpane-position = 595
+	file-view-vpane-position = 428
+	main-window-view = HistoryView

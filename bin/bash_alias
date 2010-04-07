@@ -26,6 +26,8 @@ alias le='less -fir'
 #search on history.... ![number] to execute command on history
 alias go='gnome-open'
 alias gn='find . -iname'
+# show web traffic
+alias httpdump='sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"'
 
 # --------[ Rails ]-----------------------------------------------------------------
 alias ss='./script/server'               
@@ -107,6 +109,7 @@ function git_status_prompt {
     branch_pattern="^# On branch ([^${IFS}]*)"
     remote_pattern="# Your branch is (.*) of"
     diverge_pattern="# Your branch and (.*) have diverged"
+    no_branch="Not currently on any branch."
     if [[ ! ${git_status} =~ "working directory clean" ]]; then
         state="⚡ "
     fi
@@ -124,6 +127,10 @@ function git_status_prompt {
         branch="(${BASH_REMATCH[1]}) "
         # [ "$branch" = "(master) " ] && branch=''
         echo "${branch}${remote}${state}"
+    else
+        if [[ ${git_status} =~ ${no_branch} ]]; then
+          echo "(no branch) ${remote}${state}"
+        fi
     fi
 }
 GIT_STATUS='$(git_status_prompt)'

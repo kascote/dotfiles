@@ -2,11 +2,12 @@ require 'rubygems'
 require 'wirble'
 require 'utility_belt'
 require 'pp'
+require 'ap'
 
 Wirble.init
 Wirble.colorize
 
-if ENV.include?('RAILS_ENV') 
+if ENV.include?('RAILS_ENV')
 
   if !Object.const_defined?('RAILS_DEFAULT_LOGGER')
     require 'logger'
@@ -15,7 +16,7 @@ if ENV.include?('RAILS_ENV')
 
   def sql(query)
     ActiveRecord::Base.connection.select_all(query)
-  end 
+  end
 
 end
 

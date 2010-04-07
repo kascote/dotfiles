@@ -9,7 +9,6 @@
 # 03/03/2009 - improve to search for submodules - flavio
 #
 
-#DIRS=`cat .gitmodules | sed 's/\t//g' | sed '/^[\[u]/ d' | sed 's/path = //'`
 DIRS=`cat .gitmodules | awk '/path/{print $3}'`
 CURDIR=`pwd`
 red="\033[1;38;5;1m"
@@ -20,7 +19,7 @@ check_status() {
   unpushed=`git log --pretty="format:%h : %s" HEAD ^origin/master`
 
   if [ -n "$modified" ] || [ -n "$unpushed" ]; then
-    echo "$red------------- [ $1 ] ---$clear"
+    echo "$red $1 ]=- $clear"
     if [ -n "$modified" ]; then
       echo "> uncommited:"
       echo $modified
@@ -30,7 +29,7 @@ check_status() {
       echo $unpushed
     fi
   else
-    echo "------------- [ $1 ] --- OK"
+    echo "$1 ]=- OK"
   fi
 }
 

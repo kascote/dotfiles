@@ -7,7 +7,6 @@
 # 04/01/2009 - first version by nelson fernandez - nelson@netflux.com.ar
 #
 
-#DIRS=`cat .gitmodules | sed 's/\t//g' | sed '/^[\[u]/ d' | sed 's/path = //'`
 DIRS=`cat .gitmodules | awk '/path/{print $3}'`
 CURDIR=`pwd`
 red="\033[1;38;5;1m"
@@ -15,16 +14,16 @@ clear="\033[0m"
 
 check_status() {
   branch=`git branch --no-color | awk '{print $2}'`
-  echo "------------- [ $1 ] --- $branch"
+  echo "$1 ]=- $branch"
 }
 
 cd $CURDIR
 for d in $DIRS; do
-  cd $d
-  check_status $d
+  cd "$d"
+  check_status "$d"
   cd - > /dev/null
 done
 
-cd $CURDIR
-check_status $CURDIR
+cd "$CURDIR"
+check_status "$CURDIR"
 
