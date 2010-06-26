@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'wirble'
-require 'utility_belt'
+#require 'utility_belt'
+require 'interactive_editor'
 require 'pp'
 require 'ap'
 
@@ -68,5 +69,11 @@ class Object
     data.size
   end
 
+end
+
+IRB::Irb.class_eval do
+  def output_value
+    ap @context.last_value
+  end
 end
 
