@@ -1,51 +1,67 @@
 #!/bin/bash
 
-#export black="\[\033[0;38;5;0m\]"
-#export red="\[\033[0;38;5;1m\]"
-#export redb="\[\033[1;38;5;1m\]"
-#export green="\[\033[0;38;5;2m\]"
-#export yellow="\[\033[0;38;5;3m\]"
-#export yellowb="\[\033[1;38;5;3m\]"
-#export blue="\[\033[0;38;5;4m\]"
-#export magenta="\[\033[0;38;5;55m\]"
-#export cyan="\[\033[0;38;5;6m\]"
-#export white="\[\033[0;38;5;7m\]"
-#export coldblue="\[\033[0;38;5;33m\]"
-#export smoothblue="\[\033[0;38;5;111m\]"
-#export iceblue="\[\033[0;38;5;45m\]"
-#export turqoise="\[\033[0;38;5;50m\]"
-#export smoothgreen="\[\033[0;38;5;42m\]"
+################# terminfo colors-16
+#
+#       black?    0 8
+#       red       1 9
+#       green     2 10
+#       yellow    3 11
+#       blue      4 12
+#       magenta   5 13
+#       cyan      6 14
+#       white     7 15
+#
+#       terminfo setaf/setab - sets ansi foreground/background
+#       terminfo sgr0 - resets all attributes
+#       terminfo colors - number of colors
+#
+#################  Colors-256
+#  To use foreground and background colors:
+#       Set the foreground color to index N:    \033[38;5;${N}m
+#       Set the background color to index M:    \033[48;5;${M}m
+# To make vim aware of a present 256 color extension, you can either set
+# the $TERM environment variable to xterm-256color or use vim's -T option
+# to set the terminal. I'm using an alias in my bashrc to do this. At the
+# moment I only know of two color schemes which is made for multi-color
+# terminals like urxvt (88 colors) or xterm: inkpot and desert256,
 
-function git-prompt() {
-  branch="$(__git_ps1 %s)"
-  if [[ x$branch != x ]]; then
-    dirty_color="\033[1;38;5;3m"
-    gstatus=`git --no-pager status 2> /dev/null`
-    push_status=""
-    if pushtime=`echo $gstatus | grep 'Your branch is ahead' 2> /dev/null`; then
-      push_status=" ↑"
-    fi
-    dirty=`echo $gstatus | grep 'nothing to commit (working directory clean)' > /dev/null; echo $?`
-    if [[ $dirty = 1 ]]; then
-      dirty_color="\033[1;38;5;1m"
-    fi
-    echo -en "$dirty_color$branch$push_status "
-  fi
-}
+### if term support colors,  then use color prompt, else bold
+
+#              black='\['`tput sgr0; tput setaf 0`'\]'
+#                red='\['`tput sgr0; tput setaf 1`'\]'
+#              green='\['`tput sgr0; tput setaf 2`'\]'
+#             yellow='\['`tput sgr0; tput setaf 3`'\]'
+#               blue='\['`tput sgr0; tput setaf 4`'\]'
+#            magenta='\['`tput sgr0; tput setaf 5`'\]'
+#               cyan='\['`tput sgr0; tput setaf 6`'\]'
+#              white='\['`tput sgr0; tput setaf 7`'\]'
+#
+#              BLACK='\['`tput setaf 0; tput bold`'\]'
+#                RED='\['`tput setaf 1; tput bold`'\]'
+#              GREEN='\['`tput setaf 2; tput bold`'\]'
+#             YELLOW='\['`tput setaf 3; tput bold`'\]'
+#               BLUE='\['`tput setaf 4; tput bold`'\]'
+#            MAGENTA='\['`tput setaf 5; tput bold`'\]'
+#               CYAN='\['`tput setaf 6; tput bold`'\]'  # why 14 doesn't work?
+#              WHITE='\['`tput setaf 7; tput bold`'\]'
+#
+#            bw_bold='\['`tput bold`'\]'
+
+
 
 function prompt_command_function() {
 
-  #git_repo="\$(git-prompt)"
   if [ "$USERNAME" == "root" ]
   then
-    una="\[\033[0;38;5;196m\]"
+    una='\['`tput sgr0; tput setaf 1`'\]' #red
   else
-    una="\[\033[0;38;5;130m\]"
+    una='\['`tput sgr0; tput setaf 6`'\]' #cyan
   fi
+  reset='\['`tput sgr0`'\]'
+  yellow='\['`tput sgr0; tput setaf 3`'\]'
 
   eval 'echo -ne "\033]0;${USER}@${HOSTNAME} - ${PWD}\007"'
-  #PS1="$git_repo$una > \[\033[0m\]"
-  PS1="${GIT_STATUS}${una}\$> \[\e[0m\]"
+  PS1="${yellow}${GIT_STATUS}${una}» ${reset}"
 }
 
 PROMPT_COMMAND=prompt_command_function

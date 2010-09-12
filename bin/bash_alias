@@ -1,8 +1,13 @@
+platform=`uname`
 ###########
 # GENERAL #
 ###########
 export TERM=xterm-color
+if [[ $platform == 'Darwin' ]]; then
+alias l='ls -Glh'                             # l for list style, a for all including hidden, h for human readable file sizes
+else
 alias l='ls -lh'                             # l for list style, a for all including hidden, h for human readable file sizes
+end
 alias la='l -a'                              # l for list style, a for all including hidden, h for human readable file sizes
 alias lo='l -ot'                             # order by time
 alias l.="ls -d .*"                          # show only dirs
@@ -38,12 +43,25 @@ alias hd='od -Ax -tx1z -v'                  # hex dump
 # http://www.pixelbeat.org/settings/.bashrc
 #export MANPAGER='bash -c "vim -MRn -c \"set ft=man nomod nolist nospell nonu\" -c \"nm q :qa!<CR>\" -c \"nm <end> G\" -c \"nm <home> gg\"</dev/tty <(col -b)"'
 
+#alias gvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'
+alias http_here='python -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
+alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 
 # --------[ Rails ]-----------------------------------------------------------------
-alias ss='./script/server'
-alias sc='./script/console'
+alias ss="[ -e script/server ] && script/server || rails server"
+alias sc="[ -e script/console ] && script/console || rails console"
 alias tlog='tail -f log/development.log'
 alias rst='touch tmp/restart.txt'
+alias rr='rake routes | grep '
+alias rdm='rake db:migrate'
+
+rdmdown (){
+  rake db:migrate:down VERSION=$@
+}
+rdmup (){
+  rake db:migrate:up VERSION=$@
+}
+
 
 # --------[ GIT ]-----------------------------------------------------------------
 alias gw="git whatchanged -p"
@@ -51,7 +69,7 @@ alias gl="git log --graph"
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias git-score="git log | grep '^Author' | sort | uniq -ci | sort -r"
 alias gdiff='git diff | vimdiff -'
-alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
+
 
 export PATH=$PATH:/opt/ruby-enterprise/bin
 
@@ -73,7 +91,6 @@ bind "set show-all-if-ambiguous On"
 # shell options
 shopt -s no_empty_cmd_completion >/dev/null 2>&1
 
-
 set -o vi
 # enable support for eight bits characters
 set meta-flag on
@@ -82,7 +99,12 @@ set output-meta on
 # no convert output to ascii, use eight bits
 set convert-meta off
 
-eval `dircolors ~/bin/colors_db`
+if [[ $platform == 'Darwin' ]]; then
+  . ~/bin/colors
+elif [[ $platform == 'Linux' ]]; then
+  eval `dircolors ~/bin/colors_db`
+fi
+
 
 #function sf()
 #{
@@ -90,15 +112,15 @@ eval `dircolors ~/bin/colors_db`
 #}
 function hf()
 {
-  history | grep $1
-}
-function rro()
-{
-  rake routes | grep $1
+  history | grep "$@"
 }
 # git diff is using vimdif... this function is to get original git diff functionality
 function git_diff() {
   git diff --no-ext-diff -w "$@" | vim -R -
+}
+# find user with open ports
+findportuser() {
+  lsof -i :"$1"
 }
 
 SSH_COMPLETE=( $(cat ~/.ssh/known_hosts | \
@@ -112,26 +134,24 @@ complete -o default -W "${SSH_COMPLETE[*]}" ssh
 
 # taked from http://github.com/mikewest/homedir/blob/master/etc/bash/rc/git
 function git_status_prompt {
-    local curdir=`pwd`
-    local repository_base="/vault/Projects"
-    [[ ! $curdir =~ ^$repository_base ]] && return
     git rev-parse --git-dir &> /dev/null
+    [ $? -ne 0 ] && return
     git_status="$(git status 2> /dev/null)"
     branch_pattern="^# On branch ([^${IFS}]*)"
-    remote_pattern="# Your branch is (.*) of"
-    diverge_pattern="# Your branch and (.*) have diverged"
-    no_branch="Not currently on any branch."
     if [[ ! ${git_status} =~ "working directory clean" ]]; then
-        state="⚡ "
+        state="⚡"
     fi
-    if [[ ${git_status} =~ ${remote_pattern} ]]; then
+    if [[ ${git_status} =~ "# Your branch is (.*) of" ]]; then
         if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
             remote="↑ "
         else
             remote="↓ "
         fi
     fi
-    if [[ ${git_status} =~ ${diverge_pattern} ]]; then
+    if [[ ${git_status} =~ "# Unmerged paths:" ]]; then
+      remote="[conflict] "
+    fi
+    if [[ ${git_status} =~ "# Your branch and (.*) have diverged" ]]; then
         remote="↕ "
     fi
     if [[ ${git_status} =~ ${branch_pattern} ]]; then
@@ -139,7 +159,7 @@ function git_status_prompt {
         # [ "$branch" = "(master) " ] && branch=''
         echo "${branch}${remote}${state}"
     else
-        if [[ ${git_status} =~ ${no_branch} ]]; then
+        if [[ ${git_status} =~ "Not currently on any branch." ]]; then
           echo "(no branch) ${remote}${state}"
         fi
     fi
