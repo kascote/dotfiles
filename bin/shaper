@@ -3,8 +3,8 @@
 case "$1" in
 start)
   tc qdisc add dev lo root handle 1: htb default 1
-  tc class add dev lo parent 1: classid 1:1 htb rate 80kbps #ceil 80kbps 
-  tc filter add dev lo protocol ip parent 1: prio 1 u32 match ip dport 80 0xffff flowid 1:1
+  tc class add dev lo parent 1: classid 1:1 htb rate 25kbps ceil 25kbps burst 0
+  tc filter add dev lo protocol ip parent 1:0 prio 1 u32 match ip dport 80 0xffff flowid 1:1
 ;;
 
 status)
