@@ -7,7 +7,7 @@ if [[ $platform == 'Darwin' ]]; then
 alias l='ls -Glh'                             # l for list style, a for all including hidden, h for human readable file sizes
 else
 alias l='ls -lh'                             # l for list style, a for all including hidden, h for human readable file sizes
-end
+fi
 alias la='l -a'                              # l for list style, a for all including hidden, h for human readable file sizes
 alias lo='l -ot'                             # order by time
 alias l.="ls -d .*"                          # show only dirs
