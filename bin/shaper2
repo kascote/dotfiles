@@ -1,0 +1,22 @@
+#!/bin/bash
+# Copyright 2010 Eric Ryan Harrison <me@ericharrison.info>
+# Inspired by:
+#       http://daniel.haxx.se/blog/2010/12/14/add-latency-to-localhost/
+
+if [ -n "$1" ]
+then
+        if [ "$1" = "off" ]
+        then
+                tc qdisc del dev lo root
+        else
+                tc qdisc add dev lo root handle 1:0 netem delay $1msec
+        fi
+else
+        echo 'Usage: localdelay [TIME_IN_MILLISECONDS|off]'
+        echo 'Example:'
+        echo '  localdelay 20'
+        echo '          This will add a 20 millisecond delay to localhost'
+        echo '          and pings will take 40+ms to respond.'
+        echo '  localdelay off'
+        echo '          Turns off delay.'
+fi

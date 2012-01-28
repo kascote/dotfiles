@@ -1,0 +1,6 @@
+diskName=$(drutil status | grep "Name:" | awk '{print $4}')
+
+echo diskName
+
+hdiutil makehybrid -o ~/tmp/$1 ${diskName} -iso -joliet
+

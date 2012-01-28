@@ -62,8 +62,10 @@ function prompt_command_function() {
 
   eval 'echo -ne "\033]0;${USER}@${HOSTNAME} - ${PWD}\007"'
   PS1="${yellow}${GIT_STATUS}${una}» ${reset}"
+  #PS1="${una}» ${reset}"
   #PS1="$git_repo$una > \[\033[0m\]"
   #PS1="${GIT_STATUS}${una}\$> \[\e[0m\]"
 }
 
 PROMPT_COMMAND=prompt_command_function
+

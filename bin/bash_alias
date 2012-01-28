@@ -7,7 +7,7 @@ if [[ $platform == 'Darwin' ]]; then
 alias l='ls -Glh'                             # l for list style, a for all including hidden, h for human readable file sizes
 else
 alias l='ls -lh'                             # l for list style, a for all including hidden, h for human readable file sizes
-end
+fi
 alias la='l -a'                              # l for list style, a for all including hidden, h for human readable file sizes
 alias lo='l -ot'                             # order by time
 alias l.="ls -d .*"                          # show only dirs
@@ -134,36 +134,37 @@ complete -o default -W "${SSH_COMPLETE[*]}" ssh
 
 # taked from http://github.com/mikewest/homedir/blob/master/etc/bash/rc/git
 function git_status_prompt {
-    git rev-parse --git-dir &> /dev/null
-    [ $? -ne 0 ] && return
-    git_status="$(git status 2> /dev/null)"
-    branch_pattern="^# On branch ([^${IFS}]*)"
-    if [[ ! ${git_status} =~ "working directory clean" ]]; then
-        state="⚡"
-    fi
-    if [[ ${git_status} =~ "# Your branch is (.*) of" ]]; then
-        if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
-            remote="↑ "
-        else
-            remote="↓ "
-        fi
-    fi
-    if [[ ${git_status} =~ "# Unmerged paths:" ]]; then
-      remote="[conflict] "
-    fi
-    if [[ ${git_status} =~ "# Your branch and (.*) have diverged" ]]; then
-        remote="↕ "
-    fi
-    if [[ ${git_status} =~ ${branch_pattern} ]]; then
-        branch="(${BASH_REMATCH[1]}) "
-        # [ "$branch" = "(master) " ] && branch=''
-        echo "${branch}${remote}${state}"
-    else
-        if [[ ${git_status} =~ "Not currently on any branch." ]]; then
-          echo "(no branch) ${remote}${state}"
-        fi
-    fi
+   git rev-parse --git-dir &> /dev/null
+   [ $? -ne 0 ] && return
+   git_status="$(git status 2> /dev/null)"
+   branch_pattern="^# On branch ([^${IFS}]*)"
+   if [[ ! ${git_status} =~ "working directory clean" ]]; then
+       state="⚡"
+   fi
+   if [[ ${git_status} =~ "# Your branch is (.*) of" ]]; then
+       if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
+           remote="↑ "
+       else
+           remote="↓ "
+       fi
+   fi
+   if [[ ${git_status} =~ "# Unmerged paths:" ]]; then
+     remote="[conflict] "
+   fi
+   if [[ ${git_status} =~ "# Your branch and (.*) have diverged" ]]; then
+       remote="↕ "
+   fi
+   if [[ ${git_status} =~ ${branch_pattern} ]]; then
+       branch="(${BASH_REMATCH[1]}) "
+       # [ "$branch" = "(master) " ] && branch=''
+       echo "${branch}${remote}${state}"
+   else
+       if [[ ${git_status} =~ "Not currently on any branch." ]]; then
+         echo "(no branch) ${remote}${state}"
+       fi
+   fi
 }
 GIT_STATUS='$(git_status_prompt)'
 
 . ~/bin/bash_prompt3
+

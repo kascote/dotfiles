@@ -4,9 +4,31 @@ require 'wirble'
 require 'interactive_editor'
 require 'pp'
 require 'ap'
+require 'irb/completion'
+require 'irb/ext/save-history'
+
+# where history is saved
+IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb-history"
+# # how many lines to save
+IRB.conf[:SAVE_HISTORY] = 1000
 
 Wirble.init
 Wirble.colorize
+
+
+=begin
+# detects a rails console, cares about version
+def rails?(*args)
+    version=args.first
+    v2 = ($0 == 'irb' && ENV['RAILS_ENV'])
+    v3 = ($0 == 'script/rails' && Rails.env)
+    version == 2 ? v2 : version == 3 ? v3 : v2 || v3
+end
+
+# loading rails configuration if it is running as a rails console
+load File.dirname(__FILE__) + '/.railsrc' if rails?
+=end
+
 
 if ENV.include?('RAILS_ENV')
 
@@ -75,5 +97,15 @@ IRB::Irb.class_eval do
   def output_value
     ap @context.last_value
   end
+end
+
+# toy array
+def toy_a(n=10,&block)
+    block_given? ? Array.new(n,&block) : Array.new(n) {|i| i+1}
+end
+
+# toy hash
+def toy_h(n=10)
+    Hash[toy_a(n).zip(toy_a(n){|c| (96+(c+1)).chr})]
 end
 
