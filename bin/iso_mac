@@ -1,6 +1,8 @@
 diskName=$(drutil status | grep "Name:" | awk '{print $4}')
 
-echo diskName
+echo $diskName
+
+diskutil unmountDisk ${diskName}
 
 hdiutil makehybrid -o ~/tmp/$1 ${diskName} -iso -joliet
 
