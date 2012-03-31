@@ -46,6 +46,7 @@ alias hd='od -Ax -tx1z -v'                  # hex dump
 #alias gvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'
 alias http_here='python -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias timestamp="date +%Y%m%d%H%M%S"
 
 # --------[ Rails ]-----------------------------------------------------------------
 alias ss="[ -e script/server ] && script/server || rails server"
