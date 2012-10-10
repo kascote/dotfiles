@@ -1,4 +1,4 @@
 set -o vi
 set editing-mode vi
 set keymap vi
-set convert-meta on
+#set convert-meta on
