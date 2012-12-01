@@ -19,18 +19,6 @@ IRB.conf[:SAVE_HISTORY] = 1000
 Wirble.init
 Wirble.colorize
 
-if ENV.include?('RAILS_ENV')
-
-  if !Object.const_defined?('RAILS_DEFAULT_LOGGER')
-    require 'logger'
-    Object.const_set('RAILS_DEFAULT_LOGGER', Logger.new(STDOUT))
-  end
-
-  def sql(query)
-    ActiveRecord::Base.connection.select_all(query)
-  end
-
-end
 
 class Object
   def non_class_methods
