@@ -56,6 +56,10 @@ alias rst='touch tmp/restart.txt'
 alias rr='rake routes | grep '
 alias rdm='rake db:migrate'
 
+# --------[virtualbox]------------------
+alias vbs="VBoxHeadless -v off -s "
+
+
 rdmdown (){
   rake db:migrate:down VERSION=$@
 }
