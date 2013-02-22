@@ -71,9 +71,6 @@ alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias git-score="git log | grep '^Author' | sort | uniq -ci | sort -r"
 alias gdiff='git diff | vimdiff -'
 
-
-export PATH=$PATH:/var/lib/gems/1.8/bin:/opt/ruby-enterprise/bin
-
 export HISTCONTROL=ignoredups
 # Maximum number of events saved between sessions
 export HISTFILESIZE=100000
