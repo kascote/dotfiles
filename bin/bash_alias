@@ -54,6 +54,7 @@ alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && 
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+alias flushcache='sudo killall -HUP mDNSResponder'
 
 # --------[ Rails ]-----------------------------------------------------------------
 alias ss="[ -e script/server ] && script/server || rails server"
@@ -81,9 +82,6 @@ alias gl="git log --graph"
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias git-score="git log | grep '^Author' | sort | uniq -ci | sort -r"
 alias gdiff='git diff | vimdiff -'
-
-
-export PATH=$PATH:/var/lib/gems/1.8/bin:/opt/ruby-enterprise/bin
 
 export HISTCONTROL=ignoredups
 # Maximum number of events saved between sessions
