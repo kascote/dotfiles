@@ -45,8 +45,17 @@ alias hd='od -Ax -tx1z -v'                  # hex dump
 
 #alias gvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'
 alias http_here='python -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
+alias rhttp='ruby -rrack -e "include Rack;Handler::Thin.run( Builder.new{run(Directory.new(\"\"))}, :Port => 8000)"'
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias timestamp="date +%Y%m%d%H%M%S"
+# Recursively delete `.DS_Store` files
+alias clean-dsstore="find . -type f -name '*.DS_Store' -ls -delete"
+# Hide/show all desktop icons (useful when presenting)
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+# URL-encode strings
+alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+alias flushcache='sudo killall -HUP mDNSResponder'
 
 # --------[ Rails ]-----------------------------------------------------------------
 alias ss="[ -e script/server ] && script/server || rails server"
@@ -55,6 +64,10 @@ alias tlog='tail -f log/development.log'
 alias rst='touch tmp/restart.txt'
 alias rr='rake routes | grep '
 alias rdm='rake db:migrate'
+
+# --------[virtualbox]------------------
+alias vbs="VBoxHeadless -v off -s "
+
 
 rdmdown (){
   rake db:migrate:down VERSION=$@
@@ -70,7 +83,6 @@ alias gl="git log --graph"
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias git-score="git log | grep '^Author' | sort | uniq -ci | sort -r"
 alias gdiff='git diff | vimdiff -'
-
 
 export HISTCONTROL=ignoredups
 # Maximum number of events saved between sessions
@@ -104,6 +116,27 @@ elif [[ $platform == 'Linux' ]]; then
   eval `dircolors ~/bin/colors_db`
 fi
 
+# All the dig info
+function digga() {
+  dig +nocmd "$1" any +multiline +noall +answer
+}
+# Escape UTF-8 characters into their 3-byte format
+function escape() {
+  printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u)
+  echo # newline
+}
+
+# Decode \x{ABCD}-style Unicode escape sequences
+function unidecode() {
+  perl -e "binmode(STDOUT, ':utf8'); print \"$@\""
+  echo # newline
+}
+
+# Get a character’s Unicode code point
+function codepoint() {
+  perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
+  echo # newline
+}
 
 #function sf()
 #{
