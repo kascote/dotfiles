@@ -4,6 +4,7 @@ platform=`uname`
 ###########
 export TERM=xterm-color
 if [[ $platform == 'Darwin' ]]; then
+alias ls='ls --color=auto'
 alias l='ls -Glh'                             # l for list style, a for all including hidden, h for human readable file sizes
 else
 alias l='ls -lh'                             # l for list style, a for all including hidden, h for human readable file sizes
@@ -111,7 +112,8 @@ set output-meta on
 set convert-meta off
 
 if [[ $platform == 'Darwin' ]]; then
-  . ~/bin/colors
+  #. ~/bin/colors
+  eval `dircolors ~/bin/colors_db`
 elif [[ $platform == 'Linux' ]]; then
   eval `dircolors ~/bin/colors_db`
 fi
