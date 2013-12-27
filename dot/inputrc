@@ -1,3 +1,8 @@
+# http://cnswww.cns.cwru.edu/php/chet/readline/readline.html
+#
+# C-x C-r re-read the config file
+#
+
 set -o vi
 set editing-mode vi
 set keymap vi
@@ -30,4 +35,5 @@ set skip-completed-text on
 set input-meta on
 set output-meta on
 set convert-meta off
-
+# disable bell
+set bell-style none

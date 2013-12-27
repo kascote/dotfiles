@@ -1,4 +1,4 @@
-module IRB
+module CNSL
   module GemLoader
 
     def self.setup
@@ -21,5 +21,5 @@ module IRB
 
 end
 
-IRB::GemLoader.setup if defined?(Bundler)
+CNSL::GemLoader.setup if defined?(Bundler)
 

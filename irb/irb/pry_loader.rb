@@ -1,7 +1,7 @@
-module IRB
+module CNSL
   module Pry
     def self.setup
-      return unless IRB.try_require 'pry'
+      return unless CNSL.try_require 'pry'
 
       load_pry_plugins
 
@@ -14,10 +14,10 @@ module IRB
     end
 
     def self.load_pry_plugins
-      IRB.try_require 'pry-doc'
-      IRB.try_require 'pry-rails' if defined?(Rails)
-      IRB.try_require 'pry-debugger'
-      IRB.try_require 'pry-stack_explorer'
+      CNSL.try_require 'pry-doc'
+      CNSL.try_require 'pry-rails' if defined?(Rails)
+      CNSL.try_require 'pry-debugger'
+      CNSL.try_require 'pry-stack_explorer'
     end
 
     def self.pwd
@@ -33,5 +33,5 @@ module IRB
   end
 end
 
-IRB::Pry.setup
+CNSL::Pry.setup
 

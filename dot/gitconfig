@@ -28,7 +28,7 @@
   ds = diff --stat -r
   df = diff
   gl = log --graph --pretty=format:'%Cred%h%Creset %C(cyan)%an%Creset - %C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit -date=relative
-  lg = log --graph --pretty=oneline --abbrev-commit
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   lc = log ORIG_HEAD.. --stat --no-merges
   edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
   add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
@@ -36,6 +36,7 @@
   conflict = log --merge --left-right -p
 [core]
   editor = vim
+	excludesfile = ~/.cvsignore
 [apply]
   whitespace = nowarn
 [push]

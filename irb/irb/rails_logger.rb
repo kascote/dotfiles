@@ -1,4 +1,4 @@
-module IRB
+module CNSL
   module RailsLogger
 
     # Purple messages for Rails logger
@@ -9,7 +9,7 @@ module IRB
         "\033[35m#{msg}\033[0m\n"
       end
 
-      IRB::Irb.class_eval do
+      CNSL::Irb.class_eval do
         def sql(query)
           ActiveRecord::Base.connection.select_all(query)
         end
@@ -19,4 +19,4 @@ module IRB
   end
 end
 
-IRB::RailsLogger.setup if defined?(Rails)
+CNSL::RailsLogger.setup if defined?(Rails)

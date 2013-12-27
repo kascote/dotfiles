@@ -4,21 +4,21 @@
 # the current dir, called from a git callback, or install itself as a
 # git post-merge and post-commit callback.
 # http://blog.tobiascrawley.net/2009/01/01/generating-a-tags-file-from-a-git-hook/
- 
-CTAGS = '/usr/bin/ctags'
+
+CTAGS = '/usr/local/bin/ctags'
 HOOKS = %w{ post-merge post-commit }
 HOOKS_DIR = '.git/hooks'
 TAGS_FILENAME = 'vim_tags'
- 
+
 def install
   if !File.writable?(HOOKS_DIR)
     $stderr.print "The install option [-i] can only be used within a git repo; exiting.\n"
     exit 1
   end
-  
+
   HOOKS.each { |hook| install_hook("#{HOOKS_DIR}/#{hook}") }
 end
- 
+
 def run_tags(dir)
   if File.executable?(CTAGS) and File.writable?(dir)
     %x{find #{dir} -name \\*.rb | #{CTAGS} -f #{dir}/#{TAGS_FILENAME} -L - 2>>/dev/null}
@@ -26,17 +26,17 @@ def run_tags(dir)
     $stderr.print "FAILED to write #{TAGS_FILENAME} file to #{dir}\n"
   end
 end
- 
+
 def install_hook(hook)
   if File.exists?(hook)
     $stderr.print "A file already exists at #{hook}, and will NOT be replaced.\n"
     return
   end
-  
+
   print "Linking #{__FILE__} to #{hook}\n"
   %x{ln -s #{__FILE__} #{hook}}
 end
- 
+
 if ARGV.first == '-i'
   install
 else

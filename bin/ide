@@ -1,0 +1,36 @@
+#!/bin/sh
+
+project="myproject"
+
+# Bootstrap a new session called "myproject"
+tmux new-session     -d -s $project
+
+# Rename the first window (using the session-name:id notation)
+tmux rename-window      -t ${project}:1 "backend"
+
+# Create and label three other windows, splitting the last one horizontally
+tmux new-window         -t ${project}:2 -n "frontend:server"
+tmux new-window         -t ${project}:3 -n "frontend:dev"
+tmux new-window         -t ${project}:4 -n "git"
+tmux split-window    -h -t ${project}:4
+
+# Send commands to the windows, use "C-m" to emulate "enter"
+
+# On window 1, Start the virtualenv and run the Python server.
+tmux send-keys          -t ${project}:1 "./bin/rails s" C-m
+
+# On window 2, move to the directory with the source code for the client, and start Vim
+tmux send-keys          -t ${project}:2 "vim" C-m
+
+# On window 3 setup Git. On the left launch an alias to watch the current tree, while...
+tmux send-keys          -t ${project}:4.left "ls" C-m
+
+# on the right keep a shell to interact with Git
+tmux send-keys          -t ${project}:4.right "git status" C-m
+
+# Switch to window 0
+tmux select-window -t ${project}:1
+
+# Force tmux to assume the terminal supports 256 colors and attach to the target session "myproject"
+tmux -2 attach-session -t ${project}
+

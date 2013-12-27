@@ -1,8 +1,8 @@
-module IRB
+module CNSL
   module AwesomePrintLoader
 
     def self.setup
-      return unless IRB.try_require 'awesome_print'
+      return unless CNSL.try_require 'awesome_print'
       ::Pry.config.print = proc do |output, value|
         ::Pry::Helpers::BaseHelpers.stagger_output("=> #{value.ai}", output)
       end
@@ -11,5 +11,5 @@ module IRB
   end
 end
 
-IRB::AwesomePrintLoader.setup
+CNSL::AwesomePrintLoader.setup
 

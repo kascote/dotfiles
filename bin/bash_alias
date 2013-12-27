@@ -17,7 +17,9 @@ alias c='clear'                              # shortcut to clear your terminal
 alias ..='cd ..'                             # move up 1 dir
 alias ...='cd ../..'                         # move up 2 dirs
 alias ....='cd ../../..'                     # move up 3 dirs
+alias .....='cd ../../../..'                 # move up 4 dirs
 alias rbash='source ~/bin/bash_alias'        # after editing you have to source it for the new stuff to work
+alias reload='source ~/.bashrc'
 alias ducks='du -cksh * | sort -rn|head -11' # Lists folders and files sizes in the current folder
 alias du1='du -h --max-depth=1'
 alias grep='grep --color=auto'
@@ -27,7 +29,6 @@ alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' 
 alias apti="aptitude -F \"%c%a%M%S %p %d %Z %v %V\" search "  # show the instaled version and the available one
 #alias ps="ps wwwax -o user,pid,ppid,cpu,nice,state,command"
 alias psgrep='ps aux|grep'
-alias reload='source ~/.bashrc'
 alias le='less -fir'
 #search on history.... ![number] to execute command on history
 alias go='gnome-open'
@@ -47,6 +48,7 @@ alias hd='od -Ax -tx1z -v'                  # hex dump
 #alias gvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'
 alias http_here='python -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
 alias rhttp='ruby -rrack -e "include Rack;Handler::Thin.run( Builder.new{run(Directory.new(\"\"))}, :Port => 8000)"'
+alias whttp='ruby -run -e httpd . -p5000'
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias timestamp="date +%Y%m%d%H%M%S"
 # Recursively delete `.DS_Store` files
@@ -58,24 +60,15 @@ alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && k
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 alias flushcache='sudo killall -HUP mDNSResponder'
 
+alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
+
 # --------[ Rails ]-----------------------------------------------------------------
-alias ss="[ -e script/server ] && script/server || rails server"
-alias sc="[ -e script/console ] && script/console || rails console"
 alias tlog='tail -f log/development.log'
 alias rst='touch tmp/restart.txt'
 alias rr='rake routes | grep '
-alias rdm='rake db:migrate'
 
 # --------[virtualbox]------------------
 alias vbs="VBoxHeadless -v off -s "
-
-
-rdmdown (){
-  rake db:migrate:down VERSION=$@
-}
-rdmup (){
-  rake db:migrate:up VERSION=$@
-}
 
 
 # --------[ GIT ]-----------------------------------------------------------------
@@ -163,8 +156,6 @@ SSH_COMPLETE=( $(cat ~/.ssh/known_hosts | \
   uniq | \
   egrep -v [0123456789]) )
 complete -o default -W "${SSH_COMPLETE[*]}" ssh
-
-#PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[31m\]$(__git_ps1 "(%s)")\[\033[00m\]\n$ '
 
 # taked from http://github.com/mikewest/homedir/blob/master/etc/bash/rc/git
 function git_status_prompt {
