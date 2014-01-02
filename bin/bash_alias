@@ -3,15 +3,19 @@ platform=`uname`
 # GENERAL #
 ###########
 export TERM=xterm-color
-if [[ $platform == 'Darwin' ]]; then
-alias ls='ls --color=auto'
-alias l='ls -Glh'                             # l for list style, a for all including hidden, h for human readable file sizes
-else
-alias l='ls -lh'                             # l for list style, a for all including hidden, h for human readable file sizes
+# Detect which `ls` flavor is in use
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+  colorflag="--color"
+else # OS X `ls`
+  colorflag="-G"
 fi
-alias la='l -a'                              # l for list style, a for all including hidden, h for human readable file sizes
-alias lo='l -ot'                             # order by time
-alias l.="ls -d .*"                          # show only dirs
+
+alias l="ls -lh ${colorflag}"
+alias la="ls -alh ${colorflag}"              # l for list style, a for all including hidden, h for human readable file sizes
+alias lo="ls -otlh ${colorflag}"             # order by time
+alias l.="ls -d ${colorflag} .*"             # show only dirs
+# List only directories
+alias lsd="ls -lF ${colorflag} | grep --color=never '^d'""'"
 alias h='history'                            # shortcut for history
 alias c='clear'                              # shortcut to clear your terminal
 alias ..='cd ..'                             # move up 1 dir
@@ -34,6 +38,7 @@ alias le='less -fir'
 alias go='gnome-open'
 alias gn='find . -iname'
 # show web traffic
+alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump='sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"'
 alias hd='od -Ax -tx1z -v'                  # hex dump
 # Use vim to browse man pages. One can use Ctrl-[ and Ctrl-t
@@ -50,17 +55,32 @@ alias http_here='python -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
 alias rhttp='ruby -rrack -e "include Rack;Handler::Thin.run( Builder.new{run(Directory.new(\"\"))}, :Port => 8000)"'
 alias whttp='ruby -run -e httpd . -p5000'
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias localip="ipconfig getifaddr en1"
 alias timestamp="date +%Y%m%d%H%M%S"
 # Recursively delete `.DS_Store` files
 alias clean-dsstore="find . -type f -name '*.DS_Store' -ls -delete"
+
+# Show/hide hidden files in Finder
+alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
 # Hide/show all desktop icons (useful when presenting)
 alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
 alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
-alias flushcache='sudo killall -HUP mDNSResponder'
+alias flushcache='dscacheutil -flushcache && killall -HUP mDNSResponder'
+# Stopwatch
+alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
+# Clean up LaunchServices to remove duplicates in the “Open With” menu
+alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
 alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
+
+# One of @janmoesen’s ProTip™s
+for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+  alias "$method"="lwp-request -m '$method'"
+done
 
 # --------[ Rails ]-----------------------------------------------------------------
 alias tlog='tail -f log/development.log'
@@ -87,6 +107,15 @@ export EDITOR='vim'  #Command line
 export SVN_EDITOR='${EDITOR}'
 export PAGER='less -firwX'
 #export MANPAGER='less -firwX'
+export MANPAGER='less -X'
+#color man pages
+export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
+export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
+export LESS_TERMCAP_me=$'\E[0m'           # end mode
+export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
+export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\E[0m'           # end underline
+export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 
 # bash completion settings (actually, these are readline settings)
 bind "set completion-ignore-case on" # note: bind used instead of sticking these in .inputrc
@@ -95,6 +124,12 @@ bind "set show-all-if-ambiguous On"
 
 # shell options
 shopt -s no_empty_cmd_completion >/dev/null 2>&1
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob
+# Append to the Bash history file, rather than overwriting it
+shopt -s histappend
+# Autocorrect typos in path names when using `cd`
+shopt -s cdspell
 
 set -o vi
 # enable support for eight bits characters
@@ -155,7 +190,7 @@ SSH_COMPLETE=( $(cat ~/.ssh/known_hosts | \
   sed -e s/,.*//g | \
   uniq | \
   egrep -v [0123456789]) )
-complete -o default -W "${SSH_COMPLETE[*]}" ssh
+complete -o default -W "${SSH_COMPLETE[*]}" ssh scp
 
 # taked from http://github.com/mikewest/homedir/blob/master/etc/bash/rc/git
 function git_status_prompt {
