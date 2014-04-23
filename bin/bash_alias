@@ -197,7 +197,7 @@ function git_status_prompt {
    git rev-parse --git-dir &> /dev/null
    [ $? -ne 0 ] && return
    git_status="$(git status 2> /dev/null)"
-   branch_pattern="^# On branch ([^${IFS}]*)"
+   branch_pattern="^On branch ([^${IFS}]*)"
    if [[ ! ${git_status} =~ "working directory clean" ]]; then
        state="⚡ "
    fi

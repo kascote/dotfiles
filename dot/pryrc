@@ -1,7 +1,7 @@
 #require '~/.irb/irb/gem_loader'
 #require '~/.irb/irb/awesome_print_loader'
 
-Pry.config.editor = "mcvim --nofork"
+Pry.config.editor = "mvim --nofork"
 
 #if defined?(Rails) && Rails.env
 #  require 'logger'
