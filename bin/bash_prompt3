@@ -60,12 +60,11 @@ function prompt_command_function() {
   reset='\['`tput sgr0`'\]'
   yellow='\['`tput sgr0; tput setaf 3`'\]'
 
-  eval 'echo -ne "\033]0;${USER}@${HOSTNAME} - ${PWD}\007"'
-  #PS1="${yellow}${GIT_STATUS}${una}» ${reset}"
+  # estos comandos están definidos en el bash_alias
+  stt_tab "${HOSTNAME}"
+  stt_title "${PWD/#$HOME/~}"
+
   PS1="${yellow}${GIT_STATUS}${una}∴ ${reset}"
-  #PS1="${una}» ${reset}"
-  #PS1="$git_repo$una > \[\033[0m\]"
-  #PS1="${GIT_STATUS}${una}\$> \[\e[0m\]"
 }
 
 PROMPT_COMMAND=prompt_command_function
