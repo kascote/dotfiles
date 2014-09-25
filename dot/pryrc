@@ -17,7 +17,7 @@ Pry.config.editor = "mvim --nofork"
 #end
 
 
-Pry.config.pager = false
+#Pry.config.pager = false
 Pry.config.color = true
 Pry.config.history.should_save = true
 Pry.config.should_load_local_rc = Dir.pwd != Dir.home
@@ -35,6 +35,7 @@ def colour(name, text)
   end
 end
 
+=begin
 # pretty prompt
 Pry.config.prompt = [
   proc { |target_self, nest_level, pry|
@@ -140,6 +141,7 @@ end
 #end
 
 
+=end
 
 
 

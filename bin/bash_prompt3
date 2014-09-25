@@ -50,7 +50,6 @@
 
 
 function prompt_command_function() {
-
   if [ "$USERNAME" == "root" ]
   then
     una='\['`tput sgr0; tput setaf 1`'\]' #red
@@ -60,8 +59,6 @@ function prompt_command_function() {
   reset='\['`tput sgr0`'\]'
   yellow='\['`tput sgr0; tput setaf 3`'\]'
 
-  # estos comandos están definidos en el bash_alias
-  stt_tab "${HOSTNAME}"
   stt_title "${PWD/#$HOME/~}"
 
   PS1="${yellow}${GIT_STATUS}${una}∴ ${reset}"
@@ -69,3 +66,5 @@ function prompt_command_function() {
 
 PROMPT_COMMAND=prompt_command_function
 
+# estos comandos están definidos en el bash_alias
+stt_tab "${HOSTNAME}"

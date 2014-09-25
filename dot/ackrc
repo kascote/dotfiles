@@ -11,6 +11,7 @@
 --ignore-dir=coverage
 --ignore-dir=public/assets
 --ignore-dir=public/coffeescripts
+--ignore-file=match:-*.map
 --sort-files
 --color
 --follow

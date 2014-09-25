@@ -32,7 +32,7 @@ alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' 
 #alias apti="aptitude -F \"%p %V %v\" search "  # show the instaled version and the available one
 alias apti="aptitude -F \"%c%a%M%S %p %d %Z %v %V\" search "  # show the instaled version and the available one
 #alias ps="ps wwwax -o user,pid,ppid,cpu,nice,state,command"
-alias psgrep='ps aux|grep'
+alias psgrep='ps aux | grep -i '
 alias le='less -fir'
 #search on history.... ![number] to execute command on history
 alias go='gnome-open'
