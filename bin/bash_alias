@@ -2,7 +2,7 @@ platform=`uname`
 ###########
 # GENERAL #
 ###########
-export TERM=xterm-color
+#export TERM=xterm-256color
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
   colorflag="--color"
@@ -32,7 +32,7 @@ alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' 
 #alias apti="aptitude -F \"%p %V %v\" search "  # show the instaled version and the available one
 alias apti="aptitude -F \"%c%a%M%S %p %d %Z %v %V\" search "  # show the instaled version and the available one
 #alias ps="ps wwwax -o user,pid,ppid,cpu,nice,state,command"
-alias psgrep='ps aux | grep -i '
+alias psgrep='ps aux | grep -v grep | grep -i -e VSZ -e'
 alias le='less -fir'
 #search on history.... ![number] to execute command on history
 alias go='gnome-open'
@@ -55,6 +55,7 @@ alias http_here='python -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
 alias rhttp='ruby -rrack -e "include Rack;Handler::Thin.run( Builder.new{run(Directory.new(\"\"))}, :Port => 8000)"'
 alias whttp='ruby -run -e httpd . -p5000'
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias myip2='curl http://ipecho.net/plain; echo'
 alias localip="ipconfig getifaddr en1"
 alias timestamp="date +%Y%m%d%H%M%S"
 # Recursively delete `.DS_Store` files
@@ -81,6 +82,8 @@ alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/download
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
   alias "$method"="lwp-request -m '$method'"
 done
+
+alias e="/Applications/Emacs.app/Contents/MacOS/Emacs &"
 
 # --------[ Rails ]-----------------------------------------------------------------
 alias tlog='tail -f log/development.log'
