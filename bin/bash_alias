@@ -2,6 +2,7 @@ platform=`uname`
 ###########
 # GENERAL #
 ###########
+#if [ ! $(uname) = "Darwin" ]
 #export TERM=xterm-256color
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -58,19 +59,10 @@ alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias myip2='curl http://ipecho.net/plain; echo'
 alias localip="ipconfig getifaddr en1"
 alias timestamp="date +%Y%m%d%H%M%S"
-# Recursively delete `.DS_Store` files
-alias clean-dsstore="find . -type f -name '*.DS_Store' -ls -delete"
-
-# Show/hide hidden files in Finder
-alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
-alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
-# Hide/show all desktop icons (useful when presenting)
-alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
-alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
 
 # URL-encode strings
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
-alias flushcache='dscacheutil -flushcache && killall -HUP mDNSResponder'
 # Stopwatch
 alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date'
 # Clean up LaunchServices to remove duplicates in the “Open With” menu
@@ -83,13 +75,16 @@ for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
   alias "$method"="lwp-request -m '$method'"
 done
 
-alias e="/Applications/Emacs.app/Contents/MacOS/Emacs &"
+alias tmux="TERM=xterm-256color tmux"
+
 
 # --------[ Rails ]-----------------------------------------------------------------
 alias tlog='tail -f log/development.log'
 alias rst='touch tmp/restart.txt'
 alias rr='rake routes | grep '
-
+alias rc='./bin/rails c'
+alias rdbm='./bin/rake db:migrate'
+alias rrestart='touch tmp/restart.txt'
 # --------[virtualbox]------------------
 alias vbs="VBoxHeadless -v off -s "
 
@@ -100,6 +95,39 @@ alias gl="git log --graph"
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias git-score="git log | grep '^Author' | sort | uniq -ci | sort -r"
 alias gdiff='git diff | vimdiff -'
+
+# --------[ OSX ]-----------------------------------------------------------------
+alias xcode="open -a '/Applications/XCode.app'"
+alias filemerge="open -a '/Developer/Applications/Utilities/FileMerge.app'"
+alias safari="open -a safari"
+alias firefox="open -a firefox"
+alias chrome="open -a google\ chrome"
+alias chromium="open -a chromium"
+alias f='open -a Finder '
+alias fh='open -a Finder .'
+alias textedit='open -a TextEdit'
+alias hex='open -a "Hex Fiend"'
+# Recursively delete `.DS_Store` files
+alias dsclean="find . -type f -name '*.DS_Store' -ls -delete"
+# Show/hide hidden files in Finder
+alias show="defaults write com.apple.finder AppleShowAllFiles -bool true && killall Finder"
+alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && killall Finder"
+# Hide/show all desktop icons (useful when presenting)
+alias hidedesktop="defaults write com.apple.finder CreateDesktop -bool false && killall Finder"
+alias showdesktop="defaults write com.apple.finder CreateDesktop -bool true && killall Finder"
+# Flush dns cache
+alias flushcache='dscacheutil -flushcache && killall -HUP mDNSResponder'
+# Use Finder's Quick Look on a file (^C or space to close)
+alias ql='qlmanage -p 2>/dev/null'
+# Mute/Unmute the system volume. Plays nice with all other volume settings.
+alias mute="osascript -e 'set volume output muted true'"
+alias unmute="osascript -e 'set volume output muted false'"
+# Pin to the tail of long commands for an audible alert after long processes
+# curl http://downloads.com/hugefile.zip; lmk
+alias lmk="say 'Process complete.'"
+alias e="/Applications/Emacs.app/Contents/MacOS/Emacs &"
+
+
 
 export HISTCONTROL=ignoredups
 # Maximum number of events saved between sessions

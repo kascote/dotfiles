@@ -26,7 +26,7 @@
 	unadd = reset HEAD
   st = status -sb
   ds = diff --stat -r
-  df = diff
+  df = diff -b --color-words
   gl = log --graph --pretty=format:'%Cred%h%Creset %C(cyan)%an%Creset - %C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   lc = log ORIG_HEAD.. --stat --no-merges
