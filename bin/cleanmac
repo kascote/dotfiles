@@ -1,0 +1,44 @@
+#!/bin/sh
+#https://raw.githubusercontent.com/pyrophos/Bash-Scripts/master/cleanmac
+pre=">>>"
+
+echo -e "\n$pre Cleaning mac may take a while..."
+
+echo -e "\n$pre Run periodic, daily, weekly and monthly maintenance scripts right now."
+sudo periodic daily weekly monthly
+
+# Flush logs under home directory
+echo -e "\n$pre Flush logs"
+cd ~/Library/Logs
+sudo rm -rf ~/Library/Logs/*
+
+# Flush cache under home directory
+echo -e "\n$pre Flush cache"
+rm -rf ~/Library/Safari/Downloads.plist
+cd ~/Library/Caches
+sudo rm -rf ~/Library/Caches/*
+
+# Flush directory service resolver cache
+echo -e "\n$pre Flush directory service resolver cache"
+dscacheutil -flushcache
+
+# Repair disk permissions on boot volume
+echo -e "\n$pre Repair disk permissions"
+sudo diskutil repairPermissions /
+
+# Global cache database
+echo -e "\n$pre Flush global cache database"
+cd /Library/Caches
+sudo rm -rf /Library/Caches/*
+
+# Flush system cache
+echo -e "\n$pre Flush system cache"
+cd /System/Library/Caches
+sudo rm -rf /System/Library/Caches/*
+
+# Flush launchServices Database
+echo -e "\n$pre Flush launchServices database"
+/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user
+
+echo -e "\n$pre Please restart your mac now."
+

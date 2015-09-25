@@ -11,6 +11,7 @@ else # OS X `ls`
   colorflag="-G"
 fi
 
+alias ls="ls -h ${colorflag} --group-directories-first"
 alias l="ls -lh ${colorflag}"
 alias la="ls -alh ${colorflag}"              # l for list style, a for all including hidden, h for human readable file sizes
 alias lo="ls -otlh ${colorflag}"             # order by time
@@ -126,7 +127,6 @@ alias unmute="osascript -e 'set volume output muted false'"
 # curl http://downloads.com/hugefile.zip; lmk
 alias lmk="say 'Process complete.'"
 alias e="/Applications/Emacs.app/Contents/MacOS/Emacs &"
-
 
 
 export HISTCONTROL=ignoredups
@@ -268,5 +268,6 @@ function git_status_prompt {
 }
 GIT_STATUS='$(git_status_prompt)'
 
-. ~/bin/bash_prompt3
-
+#. ~/bin/bash_prompt3
+#export PS1="\W\$(git-radar --bash --fetch) "
+export PS1="\W\$(git-radar --bash) "
