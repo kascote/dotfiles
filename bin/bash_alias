@@ -1,10 +1,5 @@
 platform=`uname`
-###########
-# GENERAL #
-###########
-#if [ ! $(uname) = "Darwin" ]
-#export TERM=xterm-256color
-# Detect which `ls` flavor is in use
+
 if ls --color > /dev/null 2>&1; then # GNU `ls`
   colorflag="--color"
 else # OS X `ls`
@@ -15,9 +10,9 @@ alias ls="ls -h ${colorflag} --group-directories-first"
 alias l="ls -lh ${colorflag}"
 alias la="ls -alh ${colorflag}"              # l for list style, a for all including hidden, h for human readable file sizes
 alias lo="ls -otlh ${colorflag}"             # order by time
-alias l.="ls -d ${colorflag} .*"             # show only dirs
+alias l.="ls -d ${colorflag} .*"             # show only dot files/dirs
 # List only directories
-alias lsd="ls -lF ${colorflag} | grep --color=never '^d'""'"
+alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
 alias h='history'                            # shortcut for history
 alias c='clear'                              # shortcut to clear your terminal
 alias ..='cd ..'                             # move up 1 dir
@@ -31,14 +26,12 @@ alias du1='du -h --max-depth=1'
 alias grep='grep --color=auto'
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
-#alias apti="aptitude -F \"%p %V %v\" search "  # show the instaled version and the available one
 alias apti="aptitude -F \"%c%a%M%S %p %d %Z %v %V\" search "  # show the instaled version and the available one
-#alias ps="ps wwwax -o user,pid,ppid,cpu,nice,state,command"
+
 alias psgrep='ps aux | grep -v grep | grep -i -e VSZ -e'
 alias le='less -fir'
 #search on history.... ![number] to execute command on history
-alias go='gnome-open'
-alias gn='find . -iname'
+alias gno='gnome-open'
 # show web traffic
 alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump='sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"'
@@ -52,7 +45,6 @@ alias hd='od -Ax -tx1z -v'                  # hex dump
 # http://www.pixelbeat.org/settings/.bashrc
 #export MANPAGER='bash -c "vim -MRn -c \"set ft=man nomod nolist nospell nonu\" -c \"nm q :qa!<CR>\" -c \"nm <end> G\" -c \"nm <home> gg\"</dev/tty <(col -b)"'
 
-#alias gvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'
 alias http_here='python -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
 alias rhttp='ruby -rrack -e "include Rack;Handler::Thin.run( Builder.new{run(Directory.new(\"\"))}, :Port => 8000)"'
 alias whttp='ruby -run -e httpd . -p5000'
@@ -75,8 +67,6 @@ alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/download
 for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
   alias "$method"="lwp-request -m '$method'"
 done
-
-alias tmux="TERM=xterm-256color tmux"
 
 
 # --------[ Rails ]-----------------------------------------------------------------
@@ -270,4 +260,4 @@ GIT_STATUS='$(git_status_prompt)'
 
 #. ~/bin/bash_prompt3
 #export PS1="\W\$(git-radar --bash --fetch) "
-export PS1="\W\$(git-radar --bash) "
+export PS1="\W\$(git-radar --bash --no-remote-status) » "

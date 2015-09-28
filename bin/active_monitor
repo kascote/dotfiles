@@ -1,8 +1,0 @@
-#xrandr --output LVDS --mode 1280x800 --left-of VGA --output VGA --mode 1024x768
-#xrandr --output LVDS --mode 1280x800 --left-of VGA --output VGA --mode 1280x1024
-
-xrandr --output VGA --newmode "1280x1024" 108.0 1280 1328 1440 1688 1024 1025 1028 1066
-xrandr --addmode VGA "1280x1024"
-xrandr --output VGA --right-of LVDS --mode "1280x1024"
-
-

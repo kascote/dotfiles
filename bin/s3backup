@@ -1,1 +1,0 @@
-s3cmd sync --exclude '*.AVI' --exclude '*.avi' --exclude '*.mp4' . s3://netflux/storage/photos/

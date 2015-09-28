@@ -1,8 +1,0 @@
-#!/usr/bin/python
-from closure_linter import fixjsstyle
-import myerrorrules
-
-if __name__ == '__main__':
-  myerrorrules.InjectErrorReporter()
-  fixjsstyle.main()
-

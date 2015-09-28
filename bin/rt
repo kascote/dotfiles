@@ -1,6 +1,0 @@
-#!/bin/sh
-root-tail -g 900x750+50+200 -font fixed \
-    /var/log/messages,green,'MSG' \
-    /home/nelson/.xsession-errors,red,'ALERT' \
-    /var/log/Xorg.0.log,magenta,'XORG' \
-    -f 

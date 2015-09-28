@@ -41,6 +41,10 @@
   up = pull --rebase --prune
   bclean = "!f() { git branch --merged ${1-master} | grep -v \"${1-master}$\" | xargs -r git branch -d; }; f"
   cob = checkout -b
+  # the acronym stands for "subtree add"
+  sba = "!f() { git subtree add --prefix $2 $1 master --squash; }; f"
+  # the acronym stands for "subtree update"
+  sbu = "!f() { git subtree pull --prefix $2 $1 master --squash; }; f"
 [core]
   editor = vim
 	excludesfile = /Users/nelson/.gitignore_global

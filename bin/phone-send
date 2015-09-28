@@ -1,4 +1,0 @@
-#!/bin/sh
-
-#gnome-obex-send -d 00:18:0F:1C:EE:C0 $1
-bluetooth-sendto -d 00:18:0F:1C:EE:C0 $1
