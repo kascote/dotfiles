@@ -1,0 +1,94 @@
+
+# All the dig info
+function digga() {
+  dig +nocmd "$1" any +multiline +noall +answer
+}
+# Escape UTF-8 characters into their 3-byte format
+function escape() {
+  printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u)
+  echo # newline
+}
+
+# Decode \x{ABCD}-style Unicode escape sequences
+function unidecode() {
+  perl -e "binmode(STDOUT, ':utf8'); print \"$@\""
+  echo # newline
+}
+
+# Get a character’s Unicode code point
+function codepoint() {
+  perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
+  echo # newline
+}
+
+#function sf()
+#{
+#  svn st | grep \? | sed '/images\/[0-9]\+$/d' | sed '/\.swp/d'
+#}
+function hf()
+{
+  history | grep "$@"
+}
+# git diff is using vimdif... this function is to get original git diff functionality
+function git_diff() {
+  git diff --no-ext-diff -w "$@" | vim -R -
+}
+# find user with open ports
+findportuser() {
+  lsof -i :"$1"
+}
+
+# $1 = type; 0 - both, 1 - tab, 2 - title
+# rest = text
+setTerminalText () {
+    # echo works in bash & zsh
+    local mode=$1 ; shift
+    echo -ne "\033]$mode;$@\007"
+}
+stt_both  () { setTerminalText 0 $@; }
+stt_tab   () { setTerminalText 1 $@; }
+stt_title () { setTerminalText 2 $@; }
+
+SSH_COMPLETE=( $(cat ~/.ssh/known_hosts | \
+  cut -f 1 -d ' ' | \
+  sed -e s/,.*//g | \
+  uniq | \
+  egrep -v [0123456789]) )
+complete -o default -W "${SSH_COMPLETE[*]}" ssh scp
+
+# taked from http://github.com/mikewest/homedir/blob/master/etc/bash/rc/git
+function git_status_prompt {
+   git rev-parse --git-dir &> /dev/null
+   [ $? -ne 0 ] && return
+   git_status="$(git status 2> /dev/null)"
+   branch_pattern="^On branch ([^${IFS}]*)"
+   if [[ ! ${git_status} =~ "working directory clean" ]]; then
+       state="⚡ "
+   fi
+   if [[ ${git_status} =~ "# Your branch is (.*) of" ]]; then
+       if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
+           remote="↑ "
+       else
+           remote="↓ "
+       fi
+   fi
+   if [[ ${git_status} =~ "# Unmerged paths:" ]]; then
+     remote="[conflict] "
+   fi
+   if [[ ${git_status} =~ "# Your branch and (.*) have diverged" ]]; then
+       remote="↕ "
+   fi
+   if [[ ${git_status} =~ ${branch_pattern} ]]; then
+       branch="(${BASH_REMATCH[1]}) "
+       # [ "$branch" = "(master) " ] && branch=''
+       echo "${branch}${remote}${state}"
+   else
+       if [[ ${git_status} =~ "Not currently on any branch." ]]; then
+         echo "(no branch) ${remote}${state}"
+       fi
+   fi
+}
+GIT_STATUS='$(git_status_prompt)'
+
+
+# vim:ft=sh

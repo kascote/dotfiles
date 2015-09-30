@@ -1,79 +1,163 @@
-#!/bin/bash
-# based on a function found in bashtstyle-ng 5.0b1
-# Original author Christopher Roy Bratusek (http://www.nanolx.org)
-# Last modified by ayoli (http://ayozone.org) 2008-02-04 17:16:43 +0100 CET 
+# This prompt inspired by gf3, sindresorhus, alrra, and mathiasbynens.
+# but customized to me (paulirish). <3
 
-_repeat ()
-{
-    _REPEAT='—'
-    while [ ${#_REPEAT} -lt $1 ]
-    do
-      _REPEAT=$_REPEAT$_REPEAT$_REPEAT
-    done
-    while [ ${#_REPEAT} -gt $1 ]
-    do
-      _REPEAT=${_REPEAT%?}
-    done
+default_username='nelson'
+
+if [[ $COLORTERM = gnome-* && $TERM = xterm ]] && infocmp gnome-256color >/dev/null 2>&1; then
+    export TERM=gnome-256color
+elif infocmp xterm-256color >/dev/null 2>&1; then
+    export TERM=xterm-256color
+fi
+
+set_prompts() {
+
+    local black="" blue="" bold="" cyan="" green="" orange="" \
+          purple="" red="" reset="" white="" yellow=""
+
+    local dateCmd=""
+
+    if [ -x /usr/bin/tput ] && tput setaf 1 &> /dev/null; then
+
+        tput sgr0 # Reset colors
+
+        bold=$(tput bold)
+        reset=$(tput sgr0)
+
+        # Solarized colors
+        # (https://github.com/altercation/solarized/tree/master/iterm2-colors-solarized#the-values)
+        black=$(tput setaf 0)
+        blue=$(tput setaf 33)
+        cyan=$(tput setaf 37)
+        green=$(tput setaf 190)
+        orange=$(tput setaf 172)
+        purple=$(tput setaf 141)
+        red=$(tput setaf 124)
+        violet=$(tput setaf 61)
+        magenta=$(tput setaf 9)
+        white=$(tput setaf 8)
+        yellow=$(tput setaf 136)
+
+    else
+
+        bold=""
+        reset="\e[0m"
+
+        black="\e[1;30m"
+        blue="\e[1;34m"
+        cyan="\e[1;36m"
+        green="\e[1;32m"
+        orange="\e[1;33m"
+        purple="\e[1;35m"
+        red="\e[1;31m"
+        magenta="\e[1;31m"
+        violet="\e[1;35m"
+        white="\e[1;37m"
+        yellow="\e[1;33m"
+
+    fi
+
+    # Only show username/host if not default
+    function usernamehost() {
+
+        # Highlight the user name when logged in as root.
+        if [[ "${USER}" == *"root" ]]; then
+            userStyle="${red}";
+        else
+            userStyle="${magenta}";
+        fi;
+
+        userhost=""
+        userhost+="\[${userStyle}\]$USER "
+        userhost+="${white}at "
+        userhost+="${orange}$HOSTNAME "
+        userhost+="${white}in"
+
+        if [ $USER != "$default_username" ]; then echo $userhost ""; fi
+    }
+
+
+    function prompt_git() {
+        # this is >5x faster than mathias's. has to be for working in Chromium & Blink.
+
+        # check if we're in a git repo. (fast)
+        git rev-parse --is-inside-work-tree &>/dev/null || return
+
+        # check for what branch we're on. (fast)
+        #   if… HEAD isn’t a symbolic ref (typical branch),
+        #   then… get a tracking remote branch or tag
+        #   otherwise… get the short SHA for the latest commit
+        #   lastly just give up.
+        branchName="$(git symbolic-ref --quiet --short HEAD 2> /dev/null || \
+            git describe --all --exact-match HEAD 2> /dev/null || \
+            git rev-parse --short HEAD 2> /dev/null || \
+            echo '(unknown)')";
+
+
+        ## early exit for Chromium & Blink repo, as the dirty check takes ~5s
+        repoUrl=$(git config --get remote.origin.url)
+        if grep -q chromium.googlesource.com <<<$repoUrl; then
+            dirty=" ⁂"
+        else
+
+            # check if it's dirty (slow)
+            #   technique via github.com/git/git/blob/355d4e173/contrib/completion/git-prompt.sh#L472-L475
+            dirty=$(git diff --no-ext-diff --quiet --ignore-submodules --exit-code || echo -e "*")
+
+            # mathias has a few more checks some may like:
+            #    github.com/mathiasbynens/dotfiles/blob/a8bd0d4300/.bash_prompt#L30-L43
+        fi
+
+
+        [ -n "${s}" ] && s=" [${s}]";
+        echo -e "${1}${branchName}${2}$dirty";
+
+        return
+    }
+
+
+
+    # ------------------------------------------------------------------
+    # | Prompt string                                                  |
+    # ------------------------------------------------------------------
+
+    PS1="\[\033]0;\w\007\]"                                 # terminal title (set to the current working directory)
+    PS1+="\n\[$bold\]"
+    PS1+="\[$(usernamehost)\]"                              # username at host
+    PS1+="\[$green\]\w"                                     # working directory
+    PS1+="\$(prompt_git \"$white on $purple\" \"$cyan\")"   # git repository details
+    PS1+="\n"
+    PS1+="\[$reset$white\]\\$ \[$reset\]"
+
+    export PS1
+
+    # ------------------------------------------------------------------
+    # | Subshell prompt string                                         |
+    # ------------------------------------------------------------------
+
+    export PS2="⚡ "
+
+    # ------------------------------------------------------------------
+    # | Debug prompt string  (when using `set -x`)                     |
+    # ------------------------------------------------------------------
+
+    # When debugging a shell script via `set -x` this tricked-out prompt is used.
+
+    # The first character (+) is used and repeated for stack depth
+    # Then, we log the current time, filename and line number, followed by function name, followed by actual source line
+
+    # FWIW, I have spent hours attempting to get time-per-command in here, but it's not possible. ~paul
+    export PS4='+ \011\e[1;30m\t\011\e[1;34m${BASH_SOURCE}\e[0m:\e[1;36m${LINENO}\e[0m \011 ${FUNCNAME[0]:+\e[0;35m${FUNCNAME[0]}\e[1;30m()\e[0m:\011\011 }'
+
+
+    # shoutouts:
+    #   https://github.com/dholm/dotshell/blob/master/.local/lib/sh/profile.sh is quite nice.
+    #   zprof is also hot.
+
+
+    #export PS1="\W\$(git-radar --bash --no-remote-status) » "
 }
 
 
-function pre_prompt {
-newPWD="${PWD}"
-user=`whoami`
-host=$(echo -n $HOSTNAME | sed -e "s/[\.].*//")
-let promptsize=$(echo -n "--($user@$host)---(${PWD})---" | wc -c | tr -d " ")
-let fillsize=${COLUMNS}-${promptsize}-1
-fill=""
 
-#while [ "$fillsize" -gt "1" ] 
-#do 
-#  fill="${fill}—"
-#	let fillsize=${fillsize}-1
-#done
-
-_REPEAT='—'
-while [ ${#_REPEAT} -lt $fillsize ]
-do
-  _REPEAT=$_REPEAT$_REPEAT$_REPEAT
-done
-while [ ${#_REPEAT} -gt $fillsize ]
-do
-  _REPEAT=${_REPEAT%?}
-done
-fill=${_REPEAT}
-
-if [ ${#fillsize} -lt "0" ]
-then
-    let cutt=3-${fillsize}
-    newPWD="...$(echo -n $PWD | sed -e "s/\(^.\{$cutt\}\)\(.*\)/\2/")"
-fi
-
-}
-
-PROMPT_COMMAND=pre_prompt
-
-export black="\[\033[0;38;5;0m\]"
-export red="\[\033[0;38;5;1m\]"
-export green="\[\033[0;38;5;2m\]"
-export yellow="\[\033[0;38;5;3m\]"
-export blue="\[\033[0;38;5;4m\]"
-export magenta="\[\033[0;38;5;55m\]"
-export cyan="\[\033[0;38;5;6m\]"
-export white="\[\033[0;38;5;7m\]"
-export coldblue="\[\033[0;38;5;33m\]"
-export smoothblue="\[\033[0;38;5;111m\]"
-export iceblue="\[\033[0;38;5;45m\]"
-export turqoise="\[\033[0;38;5;50m\]"
-export smoothgreen="\[\033[0;38;5;42m\]"
-
-user=`whoami`
-git_repo='$(__git_ps1 "%s")'
-if [ "$user" == "root" ]
-then
-  una="$red\u@\h$black"
-else
-  una="$smoothblue\u@\h$black"
-fi
-
-PS1="$black┌─($iceblue\$newPWD$black)─\${fill}─($una)────\n$black└─($red$git_repo$black)─>$white\033[0m "
-  
+set_prompts
+unset set_prompts

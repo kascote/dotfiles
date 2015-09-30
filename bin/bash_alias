@@ -1,16 +1,17 @@
 platform=`uname`
 
 if ls --color > /dev/null 2>&1; then # GNU `ls`
-  colorflag="--color"
+  colorflag="--color=auto"
 else # OS X `ls`
   colorflag="-G"
 fi
 
 alias ls="ls -h ${colorflag} --group-directories-first"
 alias l="ls -lh ${colorflag}"
-alias la="ls -alh ${colorflag}"              # l for list style, a for all including hidden, h for human readable file sizes
+alias la="ls -Alh ${colorflag}"              # l for list style, a for all including hidden, h for human readable file sizes
 alias lo="ls -otlh ${colorflag}"             # order by time
 alias l.="ls -d ${colorflag} .*"             # show only dot files/dirs
+alias ll="ls -lF ${colorflag}"
 # List only directories
 alias lsd="ls -lF ${colorflag} | grep --color=never '^d'"
 alias h='history'                            # shortcut for history
@@ -24,6 +25,8 @@ alias reload='source ~/.bashrc'
 alias ducks='du -cksh * | sort -rn|head -11' # Lists folders and files sizes in the current folder
 alias du1='du -h --max-depth=1'
 alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
 alias apti="aptitude -F \"%c%a%M%S %p %d %Z %v %V\" search "  # show the instaled version and the available one
@@ -36,14 +39,6 @@ alias gno='gnome-open'
 alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
 alias httpdump='sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E "Host\: .*|GET \/.*"'
 alias hd='od -Ax -tx1z -v'                  # hex dump
-# Use vim to browse man pages. One can use Ctrl-[ and Ctrl-t
-# to browse and return from referenced man pages. ZZ or q to quit.
-# Note initially within vim, one can goto the man page for the
-# word under the cursor by using [section_number]K.
-# Note we use bash explicitly here to support process substitution
-# which in turn suppresses the "Vim: Reading from stdin..." warning.
-# http://www.pixelbeat.org/settings/.bashrc
-#export MANPAGER='bash -c "vim -MRn -c \"set ft=man nomod nolist nospell nonu\" -c \"nm q :qa!<CR>\" -c \"nm <end> G\" -c \"nm <home> gg\"</dev/tty <(col -b)"'
 
 alias http_here='python -c "import SimpleHTTPServer;SimpleHTTPServer.test()"'
 alias rhttp='ruby -rrack -e "include Rack;Handler::Thin.run( Builder.new{run(Directory.new(\"\"))}, :Port => 8000)"'
@@ -116,148 +111,22 @@ alias unmute="osascript -e 'set volume output muted false'"
 # Pin to the tail of long commands for an audible alert after long processes
 # curl http://downloads.com/hugefile.zip; lmk
 alias lmk="say 'Process complete.'"
-alias e="/Applications/Emacs.app/Contents/MacOS/Emacs &"
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
-
-export HISTCONTROL=ignoredups
-# Maximum number of events saved between sessions
-export HISTFILESIZE=100000
-# Maximum number of events saved during a session
-export HISTSIZE=100000
-export EDITOR='vim'  #Command line
-export SVN_EDITOR='${EDITOR}'
-export PAGER='less -firwX'
-#export MANPAGER='less -firwX'
-export MANPAGER='less -X'
-#color man pages
-export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
-export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
-export LESS_TERMCAP_me=$'\E[0m'           # end mode
-export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
-export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
-export LESS_TERMCAP_ue=$'\E[0m'           # end underline
-export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
-
-# bash completion settings (actually, these are readline settings)
-bind "set completion-ignore-case on" # note: bind used instead of sticking these in .inputrc
-bind "set bell-style none"
-bind "set show-all-if-ambiguous On"
-
-# shell options
-shopt -s no_empty_cmd_completion >/dev/null 2>&1
-# Case-insensitive globbing (used in pathname expansion)
-shopt -s nocaseglob
-# Append to the Bash history file, rather than overwriting it
-shopt -s histappend
-# Autocorrect typos in path names when using `cd`
-shopt -s cdspell
-
-set -o vi
-# enable support for eight bits characters
-set meta-flag on
-set input-meta on
-set output-meta on
-# no convert output to ascii, use eight bits
-set convert-meta off
-
-if [[ $platform == 'Darwin' ]]; then
-  #. ~/bin/colors
-  eval `dircolors ~/bin/colors_db`
-elif [[ $platform == 'Linux' ]]; then
-  eval `dircolors ~/bin/colors_db`
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
 fi
 
-# All the dig info
-function digga() {
-  dig +nocmd "$1" any +multiline +noall +answer
-}
-# Escape UTF-8 characters into their 3-byte format
-function escape() {
-  printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u)
-  echo # newline
-}
+# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
+[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
 
-# Decode \x{ABCD}-style Unicode escape sequences
-function unidecode() {
-  perl -e "binmode(STDOUT, ':utf8'); print \"$@\""
-  echo # newline
-}
-
-# Get a character’s Unicode code point
-function codepoint() {
-  perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
-  echo # newline
-}
-
-#function sf()
-#{
-#  svn st | grep \? | sed '/images\/[0-9]\+$/d' | sed '/\.swp/d'
-#}
-function hf()
-{
-  history | grep "$@"
-}
-# git diff is using vimdif... this function is to get original git diff functionality
-function git_diff() {
-  git diff --no-ext-diff -w "$@" | vim -R -
-}
-# find user with open ports
-findportuser() {
-  lsof -i :"$1"
-}
-
-# $1 = type; 0 - both, 1 - tab, 2 - title
-# rest = text
-setTerminalText () {
-    # echo works in bash & zsh
-    local mode=$1 ; shift
-    echo -ne "\033]$mode;$@\007"
-}
-stt_both  () { setTerminalText 0 $@; }
-stt_tab   () { setTerminalText 1 $@; }
-stt_title () { setTerminalText 2 $@; }
-
-SSH_COMPLETE=( $(cat ~/.ssh/known_hosts | \
-  cut -f 1 -d ' ' | \
-  sed -e s/,.*//g | \
-  uniq | \
-  egrep -v [0123456789]) )
-complete -o default -W "${SSH_COMPLETE[*]}" ssh scp
-
-# taked from http://github.com/mikewest/homedir/blob/master/etc/bash/rc/git
-function git_status_prompt {
-   git rev-parse --git-dir &> /dev/null
-   [ $? -ne 0 ] && return
-   git_status="$(git status 2> /dev/null)"
-   branch_pattern="^On branch ([^${IFS}]*)"
-   if [[ ! ${git_status} =~ "working directory clean" ]]; then
-       state="⚡ "
-   fi
-   if [[ ${git_status} =~ "# Your branch is (.*) of" ]]; then
-       if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
-           remote="↑ "
-       else
-           remote="↓ "
-       fi
-   fi
-   if [[ ${git_status} =~ "# Unmerged paths:" ]]; then
-     remote="[conflict] "
-   fi
-   if [[ ${git_status} =~ "# Your branch and (.*) have diverged" ]]; then
-       remote="↕ "
-   fi
-   if [[ ${git_status} =~ ${branch_pattern} ]]; then
-       branch="(${BASH_REMATCH[1]}) "
-       # [ "$branch" = "(master) " ] && branch=''
-       echo "${branch}${remote}${state}"
-   else
-       if [[ ${git_status} =~ "Not currently on any branch." ]]; then
-         echo "(no branch) ${remote}${state}"
-       fi
-   fi
-}
-GIT_STATUS='$(git_status_prompt)'
-
-#. ~/bin/bash_prompt3
-#export PS1="\W\$(git-radar --bash --fetch) "
-export PS1="\W\$(git-radar --bash --no-remote-status) » "
+# vim:ft=sh
