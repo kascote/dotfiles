@@ -1,11 +1,11 @@
 [user]
-	name = Nelson Fernandez
+  name = Nelson Fernandez
   email = nelson@netflux.com.ar
 [color]
-	diff = auto
-	status = auto
-	branch = auto
-	interactive = auto
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
   ui = true
 [color "branch"]
   current = yellow reverse
@@ -23,13 +23,15 @@
 [alias]
   co = checkout
   ci = commit
-	unadd = reset HEAD
+  unadd = reset HEAD
   st = status -sb
   ds = diff --stat -r
   df = diff -b --color-words
   gl = log --graph --pretty=format:'%Cred%h%Creset %C(cyan)%an%Creset - %C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
   lc = log ORIG_HEAD.. --stat --no-merges
+  # Show the diff between the latest commit and the current state
+  d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
   edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; vim `f`"
   add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
   ptb = push origin HEAD
@@ -37,7 +39,7 @@
   tags = tag -l
   branches = branch -a
   remotes = remote -v
-	cm = !git add -A && git commit -m
+  cm = !git add -A && git commit -m
   up = pull --rebase --prune
   bclean = "!f() { git branch --merged ${1-master} | grep -v \"${1-master}$\" | xargs -r git branch -d; }; f"
   cob = checkout -b
@@ -47,20 +49,27 @@
   sbu = "!f() { git subtree pull --prefix $2 $1 master --squash; }; f"
 [core]
   editor = vim
-	excludesfile = /Users/nelson/.gitignore_global
+  excludesfile = /Users/nelson/.gitignore_global
+  pager = bash -lc 'diff-highlight | strip_diff_leading_symbols | less -r' -
 [apply]
   whitespace = nowarn
 [push]
-	default = current
+  default = current
 [giggle]
-	main-window-maximized = false
-	main-window-geometry = 1252x992+619+0
-	history-view-vpane-position = 595
-	file-view-vpane-position = 428
-	main-window-view = HistoryView
+  main-window-maximized = false
+  main-window-geometry = 1252x992+619+0
+  history-view-vpane-position = 595
+  file-view-vpane-position = 428
+  main-window-view = HistoryView
 [difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
+  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+  path =
 [mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
+  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+  trustExitCode = true
+[color "diff-highlight"]
+  oldNormal = "red bold"
+  oldHighlight = "red bold 52"
+  newNormal = "green bold"
+  newHighlight = "green bold 22"
+
