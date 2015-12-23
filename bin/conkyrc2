@@ -1,0 +1,56 @@
+# avoid flicker
+
+conky.config = {
+  alignment = "bottom_middle",
+  background = false,
+  border_width = 0,
+  cpu_avg_samples = 2,
+  double_buffer = true,
+  default_color = "8f8f8f",
+  default_outline_color = 'white',
+  default_shade_color = 'white',
+  draw_borders = false,
+  draw_graph_borders = true,
+  draw_outline = false,
+  draw_shades = false,
+  extra_newline = false,
+  font = "sans:size=8",
+  gap_x = 0,
+  gap_y = 0,
+  minimum_height = 0,
+  minimum_width = 1280,
+  net_avg_samples = 2,
+  override_utf8_locale = true,
+  out_to_console = false,
+  out_to_stderr = false,
+  own_window = true,
+  own_window_transparent = false,
+  own_window_class = 'Conky',
+  own_window_colour = "262729",
+  own_window_type = 'normal',
+  own_window_hints = 'undecorated,sticky,skip_taskbar,skip_pager',
+  show_graph_scale = false,
+  show_graph_range = false,
+  stippled_borders = 0,
+  top_cpu_separate = false,
+  update_interval = 1.0,
+  uppercase = false,
+  use_xft = true,
+  use_spacer = "none"
+}
+
+conky.text = [[
+Uptime: ${color e0e0e0}${uptime_short}${color} | \
+Cpu: ${color e0e0e0}${cpu cpu0}%${color} ${cpugraph color1 10,24}  \
+Ram: ${color e0e0e0}${memperc}%${color}  \
+Swap: ${color e0e0e0}${swapperc}%${color}  \
+Disk: ${color e0e0e0}${fs_used_perc /}%${color} | \
+/ ${fs_bar 10,20 /}  /vol ${fs_bar 10,20 /vol}  |  \
+Motherboard: ${color e0e0e0}${execi 300 sensors | grep temp2 | cut -c14-21 ;}${color}  \
+Cpu: ${color e0e0e0}${execi 300 sensors | grep temp1 | cut -c14-21 ;}${color}  |  \
+Up: ${color e0e0e0}${upspeedf eth0} kb/s${color}  \
+Down: ${color e0e0e0}${downspeedf eth0} kb/s${color} |  \
+Disk R: ${color e0e0e0}${diskio_read /dev/sda}${color} |  \
+Disk W: ${color e0e0e0}${diskio_Write /dev/sda}${color}
+]]
+
