@@ -1,0 +1,190 @@
+# RXVT Config. terminus font is required!
+
+#Rxvt*font:xft: true
+#Rxvt*font: terminus-iso8859-1-14
+#Rxvt*font: xft:Mono:pixelsize=13
+urxvt*font:              xft:Monospace:pixelsize=14:style=regular:antialias=true:hinting=true
+!urxvt.font:              xft:Droid Sans mono:medium:pixelsize=14
+!urxvt*font:              xft:Ubuntu Mono:pixelsize=16:style=regular:antialias=true:hinting=true
+!urxvt*boldFont:                    -*-terminus-*-*-*-*-12-*-*-*-*-*-*-*
+!!urxvt*italicFont:                    -*-terminus-*-*-*-*-12-*-*-*-*-*-*-*
+!!urxvt*bolditalicFont:             -*-terminus-*-*-*-*-12-*-*-*-*-*-*-*
+
+urxvt*geometry:          180x45
+urxvt*urlLauncher:       /usr/bin/xdg-open
+urxvt*scrollBar:         false
+urxvt*scrollBar_right:   true
+urxvt*scrollColor:       #440000
+! scroll back to the bottom on keypress
+urxvt*scrollTtyKeypress: true
+! do not scroll with output
+urxvt*scrollTtyOutput:   false
+! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+urxvt*scrollWithBuffer:  true
+urxvt*scrollstyle:       plain
+! permit secondary screen but disable terminal scroll on it
+urxvt.secondaryScreen:   true
+urxvt.secondaryScroll:   false
+! enalbe scroll wheel on secondary screen
+urxvt.secondaryWheel:    true
+urxvt*transpscrollbar:   true
+urxvt*saveLines:         32767
+urxvt*termName:          rxvt
+urxvt*depth:             32
+urxvt*borderless:        true
+! percentage of fading on unfocused
+urxvt*fading:            0
+! fading color
+urxvt*fadeColor:         #222222
+urxvt*inheritPixmap:     false
+urxvt*cutchars:          `"'&()urxvt*,;<=>?@[]{|}$``'"`
+urxvt*iconFile:          /usr/share/icons/Ultra-Flat/apps/scalable/uxterm.svg
+urxvt*reverseVideo:      false
+! fake transparency
+urxvt.transparent:       false
+! real transparency with delpth:32
+!urxvt*background: 			 [90]#000000
+urxvt.tintColor:         black
+urxvt.shading:           18
+! Do not blink when we hit something
+URxvt*visualBell:        false
+! use font glyphs
+urxvt*skipBuiltinGlyphs: true
+! cursor underline
+urxvt*cursorUnderline:   false
+! cursor blinking
+urxvt*cursorBlink:       false
+! blank the pointer on keypress or timeout
+urxvt*pointerBlank:      false
+
+Xft*dpi:                 96
+Xft*antialias:           true
+Xft.rgba:                rgb
+!Xft*hinting:             full
+Xft.hinting:             true
+Xft.hintstyle:           hintslight
+urxvt.letterSpace:       -1
+
+urxvt*perl-lib:          /usr/lib/urxvt/perl
+urxvt*perl-ext-common:   default,matcher,selection-pastebin,tabbedex
+urxvt*matcher.button:    1
+urxvt*matcher.pattern.0: \\b(?:(?:https?|ftp):\/\/|mailto:)[\\w\-\@;\/?:&=%\$_.+!*\x27(),~#]+ [\\w\-\@;\/?:&=%\$_+!*\x27()~]
+urxvt*matcher.pattern.1:  \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
+!!! This one matches image URLs and open them in FEH
+urxvt*matcher.pattern.2:  \\bhttps?:\/\/[\\w-.]*\/[\\w./?&@#-]*.(jpg|jpeg|png)
+urxvt*matcher.launcher.2: /usr/bin/xdg-open $0
+!!! Open youtubeliks in your own youtubescript
+urxvt*matcher.pattern.3:  \\bhttp:\/\/(www.youtube|youtube).com\/watch\\?v=([\\w-]*)
+urxvt*matcher.launcher.3: /usr/local/bin/dutub $2
+!URxvt.keysym.C-Delete:    perl:matcher:last
+urxvt.keysym.M-Delete:    perl:matcher:list
+! style url matcher
+!URxvt.matcher.rend.0:     Uline Bold fg5
+
+! colored ALL underline
+urxvt.colorUL:                    #4682B4
+
+! tabs color
+urxvt.tabbed.tabbar-fg:           2
+urxvt.tabbed.tabbar-bg:           0
+urxvt.tabbed.tab-fg:              3
+urxvt.tabbed.tab-bg:              0
+! hide tabs when there is only one
+urxvt.tabbed.autohide:            true
+! prevent last tab from close terminal
+urxvt.tabbed.reopen-on-close:     false
+! Disable default hot keys
+urxvt.tabbed.no-tabbedex-keys: true
+! assig new ones
+urxvt.keysym.Control-Shift-Left:  perl:tabbedex:move_tab_left
+urxvt.keysym.Control-Shift-Right: perl:tabbedex:move_tab_right
+urxvt.keysym.Control-Prior:       perl:tabbedex:prev_tab
+urxvt.keysym.Control-Next:        perl:tabbedex:next_tab
+urxvt.keysym.Control-Shift-T:     perl:tabbedex:new_tab
+urxvt.keysym.Control-Shift-R:     perl:tabbedex:rename_tab
+
+!transparent background
+urxvt*background:        #000000
+urxvt*foreground:        #dfdfdf
+!urxvt*background:        rgba:0000/0000/0000/cccc
+
+!*background:  #303030
+!*foreground:  #b0b0b0
+!! Black
+!*color0:      #202020
+!*color8:      #606060
+!! Red
+!*color1:      #ff6565
+!*color9:      #ff8d8d
+!! Green
+!*color2:      #93d44f
+!*color10:     #c8e7a8
+!! Yellow
+!*color3:      #eab93d
+!*color11:     #ffc123
+!! Blue
+!*color4:      #204a87
+!*color12:     #3465a4
+!! Mangenta
+!*color5:      #ce5c00
+!*color13:     #f57900
+!! Cyan
+!*color6:      #89b6e2
+!*color14:     #46a4ff
+!! White
+!*color7:      #cccccc
+!*color15:     #ffffff
+
+
+
+
+
+
+
+!! Default
+!! 0: black
+!*color0:  #222222
+!*color8:  #222222
+!! 1: red
+!*color1:  #9f6767
+!*color9:  #9f6767
+!! 2: green
+!*color2:  #92ac68
+!*color10: #92ac68
+!! 3: yellow
+!*color3:  #d0d293
+!*color11: #d0d293
+!! 4: blue
+!*color4:  #9aacc3
+!*color12: #9aacc3
+!! 5: magenta
+!*color5:  #bb77a4
+!*color13: #bb77a4
+!! 6: cyan
+!*color6:  #77bbb5
+!*color14: #77bbb5
+!! 7: white
+!*color7:  #777777
+!*color15: #777777
+
+
+
+
+
+
+urxvt*color0:      #000000
+urxvt*color1:      #9e1828
+urxvt*color2:      #aece92
+urxvt*color3:      #968a38
+urxvt*color4:      #414171
+urxvt*color5:      #963c59
+urxvt*color6:      #418179
+urxvt*color7:      #bebebe
+urxvt*color8:      #666666
+urxvt*color9:      #cf6171
+urxvt*color10:     #c5f779
+urxvt*color11:     #fff796
+urxvt*color12:     #4186be
+urxvt*color13:     #cf9ebe
+urxvt*color14:     #71bebe
+urxvt*color15:     #ffffff
