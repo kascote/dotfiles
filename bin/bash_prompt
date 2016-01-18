@@ -158,6 +158,8 @@ set_prompts() {
     #export PS1="\W\$(git-radar --bash --no-remote-status) » "
 }
 
+# set cursor color (gnome-terminal)
+echo -ne '\e]12;red\a'
 
 
 set_prompts
