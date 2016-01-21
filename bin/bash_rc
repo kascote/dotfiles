@@ -1,4 +1,5 @@
 
+
 # If not running interactively, don't do anything
 #case $- in
 #    *i*) ;;
@@ -9,7 +10,7 @@
 #   ~/.extra can be used for settings you don’t want to commit,
 #   Use it to configure your PATH, thus it being first in line.
 for file in ~/bin/bash_{extra,prompt,exports,alias,functions}; do
-    [ -r "$file" ] && source "$file"
+    [[ -f "$file" ]] && source "$file" 
 done
 unset file
 
