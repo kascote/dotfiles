@@ -1,0 +1,6 @@
+#/bin/sh
+
+synclient \
+  MaxSpeed=4 \
+  AccelFactor=0.05 \
+  TapButton3=2
