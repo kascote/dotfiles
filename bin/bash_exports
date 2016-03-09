@@ -33,7 +33,8 @@ export LC_ALL="en_US.UTF-8"
 export LANG="en_US.UTF-8"
 
 
-eval `dircolors -b ~/bin/colors_db`
+#eval `dircolors -b ~/bin/colors_db`
+eval `dircolors -b ~/bin/colors_db_white`
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"

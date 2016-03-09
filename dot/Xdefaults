@@ -1,61 +1,21 @@
-# RXVT Config. terminus font is required!
 
+
+
+!{{{************ [ FONTS ] **************************************************
+! Select the fonts to be used. This is a comma separated list of font names
+! that are checked in order when trying to find glyphs for characters.
+! The first font defines the cell size for
 #Rxvt*font:xft: true
 #Rxvt*font: terminus-iso8859-1-14
 #Rxvt*font: xft:Mono:pixelsize=13
-urxvt*font:              xft:Monospace:pixelsize=14:style=regular:antialias=true:hinting=true
+!urxvt*font:              xft:Monospace:pixelsize=14:style=regular:antialias=true:hinting=true
 !urxvt.font:              xft:Droid Sans mono:medium:pixelsize=14
 !urxvt*font:              xft:Ubuntu Mono:pixelsize=16:style=regular:antialias=true:hinting=true
+URxvt*font:              xft:Hack:pixelsize=14:style=regular:antialias=true:hinting=true
+!urxvt*font:              xft:Source Code Pro:pixelsize=14:style=regular:antialias=true:hinting=true
 !urxvt*boldFont:                    -*-terminus-*-*-*-*-12-*-*-*-*-*-*-*
 !!urxvt*italicFont:                    -*-terminus-*-*-*-*-12-*-*-*-*-*-*-*
 !!urxvt*bolditalicFont:             -*-terminus-*-*-*-*-12-*-*-*-*-*-*-*
-
-urxvt*geometry:          180x45
-urxvt*urlLauncher:       /usr/bin/xdg-open
-urxvt*scrollBar:         false
-urxvt*scrollBar_right:   true
-urxvt*scrollColor:       #440000
-! scroll back to the bottom on keypress
-urxvt*scrollTtyKeypress: true
-! do not scroll with output
-urxvt*scrollTtyOutput:   false
-! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
-urxvt*scrollWithBuffer:  true
-urxvt*scrollstyle:       plain
-! permit secondary screen but disable terminal scroll on it
-urxvt.secondaryScreen:   true
-urxvt.secondaryScroll:   false
-! enalbe scroll wheel on secondary screen
-urxvt.secondaryWheel:    true
-urxvt*transpscrollbar:   true
-urxvt*saveLines:         32767
-urxvt*termName:          rxvt
-urxvt*depth:             32
-urxvt*borderless:        true
-! percentage of fading on unfocused
-urxvt*fading:            0
-! fading color
-urxvt*fadeColor:         #222222
-urxvt*inheritPixmap:     false
-urxvt*cutchars:          `"'&()urxvt*,;<=>?@[]{|}$``'"`
-urxvt*iconFile:          /usr/share/icons/Ultra-Flat/apps/scalable/uxterm.svg
-urxvt*reverseVideo:      false
-! fake transparency
-urxvt.transparent:       false
-! real transparency with delpth:32
-!urxvt*background: 			 [90]#000000
-urxvt.tintColor:         black
-urxvt.shading:           18
-! Do not blink when we hit something
-URxvt*visualBell:        false
-! use font glyphs
-urxvt*skipBuiltinGlyphs: true
-! cursor underline
-urxvt*cursorUnderline:   false
-! cursor blinking
-urxvt*cursorBlink:       false
-! blank the pointer on keypress or timeout
-urxvt*pointerBlank:      false
 
 Xft*dpi:                 96
 Xft*antialias:           true
@@ -63,53 +23,287 @@ Xft.rgba:                rgb
 !Xft*hinting:             full
 Xft.hinting:             true
 Xft.hintstyle:           hintslight
-urxvt.letterSpace:       -1
+URxvt.letterSpace:       -1
 
-urxvt*perl-lib:          /usr/lib/urxvt/perl
-urxvt*perl-ext-common:   default,matcher,selection-pastebin,tabbedex
-urxvt*matcher.button:    1
-urxvt*matcher.pattern.0: \\b(?:(?:https?|ftp):\/\/|mailto:)[\\w\-\@;\/?:&=%\$_.+!*\x27(),~#]+ [\\w\-\@;\/?:&=%\$_+!*\x27()~]
-urxvt*matcher.pattern.1:  \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
-!!! This one matches image URLs and open them in FEH
-urxvt*matcher.pattern.2:  \\bhttps?:\/\/[\\w-.]*\/[\\w./?&@#-]*.(jpg|jpeg|png)
-urxvt*matcher.launcher.2: /usr/bin/xdg-open $0
-!!! Open youtubeliks in your own youtubescript
-urxvt*matcher.pattern.3:  \\bhttp:\/\/(www.youtube|youtube).com\/watch\\?v=([\\w-]*)
-urxvt*matcher.launcher.3: /usr/local/bin/dutub $2
-!URxvt.keysym.C-Delete:    perl:matcher:last
-urxvt.keysym.M-Delete:    perl:matcher:list
-! style url matcher
-!URxvt.matcher.rend.0:     Uline Bold fg5
+! Specifies number of lines (pixel height) to insert between each row of the
+! display [default 0]; option -lsp.
+! URxvt*lineSpace: number
 
-! colored ALL underline
-urxvt.colorUL:                    #4682B4
+! Compile xft: Attempt to find a visual with the given bit depth; option -depth.
+URxvt*depth:             32
 
-! tabs color
-urxvt.tabbed.tabbar-fg:           2
-urxvt.tabbed.tabbar-bg:           0
-urxvt.tabbed.tab-fg:              3
-urxvt.tabbed.tab-bg:              0
-! hide tabs when there is only one
-urxvt.tabbed.autohide:            true
-! prevent last tab from close terminal
-urxvt.tabbed.reopen-on-close:     false
-! Disable default hot keys
-urxvt.tabbed.no-tabbedex-keys: true
-! assig new ones
-urxvt.keysym.Control-Shift-Left:  perl:tabbedex:move_tab_left
-urxvt.keysym.Control-Shift-Right: perl:tabbedex:move_tab_right
-urxvt.keysym.Control-Prior:       perl:tabbedex:prev_tab
-urxvt.keysym.Control-Next:        perl:tabbedex:next_tab
-urxvt.keysym.Control-Shift-T:     perl:tabbedex:new_tab
-urxvt.keysym.Control-Shift-R:     perl:tabbedex:rename_tab
+! Compile xft: Turn on/off double-buffering for xft (default enabled).
+! On some card/driver combination enabling it slightly decreases performance, on most it greatly helps it.
+URxvt*buffered:          true
 
-!transparent background
-urxvt*background:        #000000
-urxvt*foreground:        #dfdfdf
-!urxvt*background:        rgba:0000/0000/0000/cccc
+!}}}
 
-!*background:  #303030
-!*foreground:  #b0b0b0
+!{{{************ [ SCROLL ] **************************************************
+
+! True: specify that jump scrolling should be used. When receiving lots
+! of lines, urxvt will only scroll once a whole screen height of lines has
+! been read, resulting in fewer updates while still
+URxvt*jumpScroll:        true
+
+! True: enable the scrollbar [default]; option -sb.
+! False: disable the scrollbar; option +sb.
+URxvt*scrollBar:         false
+
+! True: place the scrollbar on the right of the window; option -sr.
+! False: place the scrollbar on the left of the window; option +sr.
+URxvt*scrollBar_right:   true
+
+! Use the specified colour for the scrollbar [default #B2B2B2].
+URxvt*scrollColor:       #440000
+
+! Set scrollbar style to rxvt, plain, next or xterm. plain is the authors favourite.
+URxvt*scrollstyle:       plain
+
+! Set the scrollbar width in pixels.
+! URxvt*thickness: number
+
+! Use the specified colour for the scrollbars trough area [default #969696].
+! Only relevant for rxvt (non XTerm/NeXT) scrollbar.
+! URxvt*troughColor: colour
+
+! True: display an rxvt scrollbar without a trough; option -st.
+! False: display an rxvt scrollbar with a trough; option +st.
+! URxvt*scrollBar_floating: boolean
+
+! Align the top, bottom or centre [default] of the scrollbar thumb with the
+! pointer on middle button press/drag.
+! URxvt*scrollBar_align: mode
+
+! True: scroll to bottom when a non-special key is pressed. Special keys are
+! those which are intercepted by rxvt-unicode for special handling and are
+! not passed onto the shell; option -sk.
+URxvt*scrollTtyKeypress: true
+
+! True: scroll to bottom when tty receives output; option -si.
+! False: do not scroll to bottom when tty receives output; option +si.
+URxvt*scrollTtyOutput:   false
+
+! True: scroll with scrollback buffer when tty receives new lines
+! (i.e.  try to show the same lines) and scrollTtyOutput is False; option -sw.
+! False: do not scroll with scrollback buffer when
+URxvt*scrollWithBuffer:  true
+
+! Turn on/off secondary screen (default enabled).
+! permit secondary screen but disable terminal scroll on it
+URxvt.secondaryScreen:   true
+
+! Turn on/off secondary screen scroll (default enabled). If this option is
+! enabled, scrolls on the secondary screen will change the scrollback buffer
+! and, when secondaryScreen is off, switching
+URxvt.secondaryScroll:   false
+
+! enalbe scroll wheel on secondary screen
+URxvt.secondaryWheel:    true
+URxvt*transpscrollbar:   true
+
+! True: (the default) specify that skip scrolling should be used. When
+! receiving lots of lines, urxvt will only scroll once in a while (around
+! 60 times per second), resulting in far fewer
+URxvt*skipScroll:        false
+
+! Save number lines in the scrollback buffer [default 64]. This resource is
+! limited on most machines to 65535; option -sl.
+URxvt*saveLines:         32767
+
+!}}}
+
+!{{{************ [ CURSOR / MOUSE ] ******************************************
+
+! Mouse pointer foreground colour.
+! URxvt*pointerColor: colour
+
+! Mouse pointer background colour.
+! URxvt*pointerColor2: colour
+
+! True: the mouse wheel scrolls a page full.
+! False: the mouse wheel scrolls five lines [default].
+! URxvt*mouseWheelScrollPage: boolean
+
+! Change the meaning of triple-click selection with the left mouse button. Instead of selecting a full line it will extend the selection to the end of the logical line only; option -tcw.
+! URxvt*tripleclickwords: boolean
+
+! True: Make the cursor underlined.
+! False: Make the cursor a box [default]; option -uc.
+URxvt*cursorUnderline:   false
+
+! True: blink the cursor. False: do not blink the cursor [default]; option -bc.
+URxvt*cursorBlink:       false
+
+! Specify the maximum time in milliseconds between multi-click select events.
+! The default is 500 milliseconds; option -mc.
+! URxvt*multiClickTime: number
+
+! The characters used as delimiters for double-click word selection
+! (whitespace delimiting is added automatically if resource is given).
+URxvt*cutchars:          `"'&()urxvt*,;<=>?@[]{|}$``'"`
+
+!}}}
+
+!{{{************ [ TERMINAL ] **************************************************
+
+
+! Set window title string, the default title is the command-line specified
+! after the -e option, if any, otherwise the application name; option -title.
+! URxvt*title: string
+
+! Create the window with the specified X window geometry [default 80x24];
+URxvt*geometry:          180x45
+
+! Set MWM hints to request a borderless window, i.e. if honoured by the WM, the
+! rxvt-unicode window will not have window decorations; option -bl.
+URxvt*borderless:        true
+
+! Turn on/off hold window after exit support. If enabled, urxvt will not
+! immediately destroy its window when the program executed within it exits.
+! Instead, it will wait till it is being killed
+! URxvt*hold: boolean
+
+! Sets the working directory for the shell (or the command specified via -e).
+! The path must be an absolute path and it must exist for urxvt to start. If
+! it isnt specified then the current
+! URxvt*chdir: path
+
+! Specifies the terminal type name to be set in the TERM environment variable
+URxvt*termName:          xterm-256color
+
+! True: store tabs as wide characters. False: interpret tabs as cursor movement
+! only; option "-ptab".
+! URxvt*pastableTabs: boolean
+
+! Enables "insecure" mode. Rxvt-unicode offers some escape sequences that echo
+! arbitrary strings like the icon name or the locale. This could be abused if
+! somebody gets 8-bit-clean access to
+! URxvt*insecure: boolean
+
+! True: start as a login shell by prepending a - to argv[0] of the shell;
+! option -ls.
+! False: start as a normal sub-shell [default]; option +ls.
+URxvt*loginShell:        false
+
+! Specify the reply rxvt-unicode sends to the shell when an ENQ (control-E)
+! character is passed through. It may contain escape values as described in
+! the entry on keysym following.
+! URxvt*answerbackString: string
+
+! True: handle Meta (Alt) + keypress to set the 8th bit.
+! False: handle Meta (Alt) + keypress as an escape prefix [default].
+! URxvt*meta8: boolean
+
+! Set the key to be interpreted as the Meta key to: alt, meta, hyper, super,
+! mod1, mod2, mod3, mod4, mod5; option -mod.
+! URxvt*modifier: modifier
+
+! True: de-iconify (map) on receipt of a bell character.
+! False: no de-iconify (map) on receipt of a bell character [default].
+! URxvt*mapAlert: boolean
+
+! True: use visual bell on receipt of a bell character; option -vb.
+! False: no visual bell [default]; option +vb.
+URxvt*visualBell:        false
+
+! True: set the urgency hint for the wm on receipt of a bell character.
+! False: do not set the urgency hint [default].
+! URxvt*urgentOnBell: boolean
+
+! The string to send when the backspace key is pressed. If set to DEC or unset
+! it will send Delete (code 127) or, with control, Backspace (code 8) - which
+! can be reversed with the appropriate
+! URxvt*backspacekey: string
+
+! The string to send when the delete key (not the keypad delete key) is pressed.
+! If unset it will send the sequence traditionally associated with the Execute
+! key.
+! URxvt*deletekey: string
+
+! Specifies the program to be started with a URL argument. Used by the
+! "selection-popup" and "matcher" perl extensions.
+URxvt*url-launcher:       /usr/bin/xdg-open
+
+!}}}
+
+!{{{************ [ THEME ] **************************************************
+
+! True: simulate reverse video by foreground and background colours;
+! False: regular screen colours [default];
+! option +rv. See note in COLOURS AND GRAPHICS section.
+URxvt*reverseVideo:      false
+
+! fake transparency
+URxvt.transparent:       false
+
+! Use the specified colour as the windows background colour [default White]; option -bg.
+! real transparency with delpth:32
+!urxvt*background: 			 [90]#000000
+!urxvt*background:       rgba:0000/0000/0000/cccc
+URxvt*background:        #000000
+
+! Use the specified colour as the windows foreground colour [default Black]; option -fg.
+URxvt*foreground:        #dfdfdf
+
+URxvt.tintColor:         black
+
+URxvt.shading:           18
+
+! Fade the text by the given percentage when focus is lost; option -fade.
+URxvt*fading:            0
+
+! Fade to this colour, when fading is used (see fading:).
+! The default colour is black; option -fadecolor.
+URxvt*fadeColor:         #222222
+
+URxvt*inheritPixmap:     false
+
+! Set the application icon pixmap; option -icon.
+URxvt*iconFile:          /usr/share/icons/Ultra-Flat/apps/scalable/uxterm.svg
+
+! Set the name used to label the windows icon or displayed in an icon manager
+! window, it also sets the windows title unless it is explicitly set; option -n.
+! URxvt*iconName: string
+
+! Bold Color
+! URxvt*colorBD: colour
+
+! Use the specified colour to display bold or italic characters when the
+! foreground colour is the default. If font styles are not available
+! (Compile styles) and this option is unset, reverse
+! URxvt*colorIT: colour
+
+! Use the specified colour to display underlined characters when the
+! foreground colour is the default.
+URxvt.colorUL:                    #4682B4
+
+! If set, use the specified colour as the colour for the underline itself.
+! If unset, use the foreground colour.
+! URxvt*underlineColor: colour
+
+! If set, use the specified colour as the background for highlighted
+! characters. If unset, use reverse video.
+URxvt*highlightColor: yellow
+
+! If set and highlightColor is set, use the specified colour as the foreground
+! for highlighted characters.
+URxvt*highlightTextColor: black
+
+! Use the specified colour for the cursor. The default is to use the
+! foreground colour; option -cr.
+URxvt*cursorColor: red
+
+! Use the specified colour for the colour of the cursor text. For this to take
+! effect, cursorColor must also be specified. The default is to use the
+! background colour.
+URxvt*cursorColor2: green
+
+! The colour of the border around the text area and between the scrollbar and the text.
+! URxvt*borderColor: colour
+
+! Use the specified colour for the colour value n, where 0-7 corresponds to low-intensity (normal) colours and 8-15 corresponds to high-intensity (bold = bright foreground, blink = bright
+! URxvt*colorn: colour
+
 !! Black
 !*color0:      #202020
 !*color8:      #606060
@@ -134,11 +328,6 @@ urxvt*foreground:        #dfdfdf
 !! White
 !*color7:      #cccccc
 !*color15:     #ffffff
-
-
-
-
-
 
 
 !! Default
@@ -167,24 +356,155 @@ urxvt*foreground:        #dfdfdf
 !*color7:  #777777
 !*color15: #777777
 
+URxvt*color0:      #000000
+URxvt*color1:      #9e1828
+URxvt*color2:      #aece92
+URxvt*color3:      #968a38
+URxvt*color4:      #414171
+URxvt*color5:      #963c59
+URxvt*color6:      #418179
+URxvt*color7:      #bebebe
+URxvt*color8:      #666666
+URxvt*color9:      #cf6171
+URxvt*color10:     #c5f779
+URxvt*color11:     #fff796
+URxvt*color12:     #4186be
+URxvt*color13:     #cf9ebe
+URxvt*color14:     #71bebe
+URxvt*color15:     #ffffff
+
+!baskerville-ivorylight
 
 
+!}}}
+
+!{{{************ [ STYLES ] **************************************************
+
+! When font styles are not enabled, or this option is enabled (True,
+! option -is, the default), bold/blink font styles imply high intensity
+! foreground/background colours. Disabling this option
+URxvt*intensityStyles: true
+
+! Specifies number of seconds before blanking the pointer [default 2].
+! Use a large number (e.g. 987654321) to effectively disable the timeout.
+! URxvt*pointerBlankDelay: number
+
+! Internal border of number pixels. This resource is limited to 100; option -b.
+! URxvt*internalBorder: number
+
+! External border of number pixels. This resource is limited to 100; option -w, -bw, -borderwidth.
+! URxvt*externalBorder: number
+
+! Compile frills: Disable the usage of the built-in block graphics/line
+! drawing characters and just rely on what the specified fonts provide.
+! Use this if you have a good font and want to use its
+URxvt*skipBuiltinGlyphs: true
+
+! True: blank the pointer when a key is pressed or after a set number of
+! seconds of inactivity.
+! False: the pointer is always visible [default].
+URxvt*pointerBlank:      false
 
 
+!}}}
 
-urxvt*color0:      #000000
-urxvt*color1:      #9e1828
-urxvt*color2:      #aece92
-urxvt*color3:      #968a38
-urxvt*color4:      #414171
-urxvt*color5:      #963c59
-urxvt*color6:      #418179
-urxvt*color7:      #bebebe
-urxvt*color8:      #666666
-urxvt*color9:      #cf6171
-urxvt*color10:     #c5f779
-urxvt*color11:     #fff796
-urxvt*color12:     #4186be
-urxvt*color13:     #cf9ebe
-urxvt*color14:     #71bebe
-urxvt*color15:     #ffffff
+!{{{************ [ PERL ] **************************************************
+
+! Comma-separated list(s) of perl extension scripts (default: "default") to
+! use in this terminal instance; option -pe.
+! URxvt*perl-ext: string
+
+! Perl code to be evaluated when all extensions have been registered. See the
+! urxvtperl(3) manpage.
+! URxvt*perl-eval: string
+
+! Colon-separated list of additional directories that hold extension scripts.
+! When looking for perl extensions, urxvt will first look in these directories,
+! then in $URXVT_PERL_LIB,
+URxvt*perl-lib:          /usr/lib/urxvt/perl
+
+! Additional selection patterns, see the urxvtperl(3) manpage for details.
+! URxvt*selection.pattern-idx: perl-regex
+
+! Selection auto-transform patterns, see the urxvtperl(3) manpage for details.
+! URxvt*selection-autotransform.idx: perl-transform
+
+URxvt*perl-ext-common:   default,matcher,selection-pastebin,tabbedex
+
+!}}}
+
+!{{{************ [ PLUGINS ] **************************************************
+
+!#############################################################################
+! TABS
+!#############################################################################
+! tabs color
+URxvt.tabbed.tabbar-fg:           2
+URxvt.tabbed.tabbar-bg:           0
+URxvt.tabbed.tab-fg:              3
+URxvt.tabbed.tab-bg:              0
+! hide tabs when there is only one
+URxvt.tabbed.autohide:            true
+! prevent last tab from close terminal
+URxvt.tabbed.reopen-on-close:     false
+! Disable default hot keys
+URxvt.tabbed.no-tabbedex-keys: true
+
+! assig new ones
+URxvt.keysym.Control-Shift-Left:  perl:tabbedex:move_tab_left
+URxvt.keysym.Control-Shift-Right: perl:tabbedex:move_tab_right
+URxvt.keysym.Control-Prior:       perl:tabbedex:prev_tab
+URxvt.keysym.Control-Next:        perl:tabbedex:next_tab
+URxvt.keysym.Control-Shift-T:     perl:tabbedex:new_tab
+URxvt.keysym.Control-Shift-R:     perl:tabbedex:rename_tab
+!#############################################################################
+
+!}}}
+
+!{{{************ [ RARES ] **************************************************
+
+! Compile frills: Sets override-redirect for the terminal window, making it
+! almost invisible to window managers; option -override-redirect.
+! URxvt*override-redirect: boolean
+
+! Turn on/off ISO 14755 (default enabled).
+URxvt*iso14755: false
+
+! Turn on/off ISO 14755 5.2 mode (default enabled).
+URxvt*iso14755_52: false
+
+! Compile frills: Sets the WM_TRANSIENT_FOR property to the given window id.
+! URxvt*transient-for: windowid
+
+! True: inhibit writing record into the system log file utmp; option -ut.
+! False: write record into the system log file utmp [default]; option +ut.
+! URxvt*utmpInhibit: boolean
+
+! Specify a command pipe for vt100 printer [default lpr(1)]. Use Print to
+! initiate a screen dump to the printer and Ctrl-Print or Shift-Print to
+! include the scrollback as well.
+! URxvt*print-pipe: string
+
+!****************************************************************************}}}
+
+! clickeable matchrs with button 1
+URxvt*matcher.button:    1
+
+URxvt*matcher.pattern.0: \\b(?:(?:https?|ftp):\/\/|mailto:)[\\w\-\@;\/?:&=%\$_.+!*\x27(),~#]+ [\\w\-\@;\/?:&=%\$_+!*\x27()~]
+URxvt*matcher.pattern.1:  \\bwww\\.[\\w-]+\\.[\\w./?&@#-]*[\\w/-]
+!!! This one matches image URLs and open them in FEH
+URxvt*matcher.pattern.2:  \\bhttps?:\/\/[\\w-.]*\/[\\w./?&@#-]*.(jpg|jpeg|png)
+URxvt*matcher.launcher.2: /usr/bin/xdg-open $0
+!!! Open youtubeliks in your own youtubescript
+URxvt*matcher.pattern.3:  \\bhttp:\/\/(www.youtube|youtube).com\/watch\\?v=([\\w-]*)
+URxvt*matcher.launcher.3: /usr/local/bin/dutub $2
+! style url matcher
+URxvt.matcher.rend.0:     Uline Bold fg5
+
+! Compile frills: Associate action with keysym sym. The intervening resource name keysym. cannot be omitted.
+! URxvt*keysym.sym: action
+URxvt.keysym.C-Delete:    perl:matcher:last
+URxvt.keysym.M-Delete:    perl:matcher:list
+
+
+! vim:foldmethod=marker:foldlevel=0:foldlevelstart=0:foldenable

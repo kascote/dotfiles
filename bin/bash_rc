@@ -10,7 +10,7 @@ esac
 #   ~/.extra can be used for settings you don’t want to commit,
 #   Use it to configure your PATH, thus it being first in line.
 for file in ~/bin/bash_{extra,prompt,exports,alias,functions}; do
-    [[ -f "$file" ]] && source "$file" 
+    [[ -f "$file" ]] && source "$file"
 done
 unset file
 
@@ -25,9 +25,6 @@ export HISTFILESIZE=$HISTSIZE
 
 # append to the history file, don't overwrite it
 shopt -s histappend
-
-
-
 # shell options
 shopt -s no_empty_cmd_completion >/dev/null 2>&1
 # Case-insensitive globbing (used in pathname expansion)
@@ -42,6 +39,6 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+shopt -s globstar
 
 # vim:ft=sh

@@ -49,8 +49,8 @@
   sbu = "!f() { git subtree pull --prefix $2 $1 master --squash; }; f"
 [core]
   editor = vim
-  excludesfile = /Users/nelson/.gitignore_global
-  pager = bash -lc 'diff-highlight | strip_diff_leading_symbols | less -r' -
+  excludesfile = ~/.cvsignore
+  #pager = bash -c 'diff-highlight | strip_diff_leading_symbols | less -r' -
 [apply]
   whitespace = nowarn
 [push]
