@@ -1,1 +1,13 @@
-/usr/share/doc/git/contrib/diff-highlight/diff-highlight
+#!/bin/sh
+
+ubuntu="/usr/share/doc/git/contrib/diff-highlight/diff-highlight"
+arch="/usr/share/git/diff-highlight/diff-highlight"
+
+if [[ -x "$ubuntu" ]]; then
+  ($ubuntu)
+else
+  if [[ -x "$arch" ]]; then
+    ($arch)
+  fi
+fi
+
