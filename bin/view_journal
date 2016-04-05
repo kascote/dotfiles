@@ -1,0 +1,1 @@
+journalctl -e _COMM=gdm-x-session
