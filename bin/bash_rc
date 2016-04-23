@@ -25,8 +25,6 @@ export HISTFILESIZE=100000
 # Don't record some commands
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history:clear:cd"
 
-# append to the history file, don't overwrite it
-shopt -s histappend
 # shell options
 shopt -s no_empty_cmd_completion >/dev/null 2>&1
 # Case-insensitive globbing (used in pathname expansion)
@@ -54,7 +52,7 @@ shopt -s globstar
 set -o noclobber
 
 # Automatically trim long paths in the prompt (requires Bash 4.x)
-export PROMPT_DIRTRIM=2
+#export PROMPT_DIRTRIM=2
 
 
 # This defines where cd looks for targets
