@@ -1,0 +1,6 @@
+#cdrdao read-cd --source-device /dev/sr0 --driver generic-mmc \
+#               --paranoia-mode 3 audiocd.toc
+
+
+cdrdao write  --device /dev/sr0 --driver generic-mmc \
+              --buffers 128 --speed 8 audiocd.toc

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+walls_dir=$HOME/Pictures/backgrounds
+selection=$(find $walls_dir -type f -name "*.jpg" -o -name "*.png" | shuf -n1)
+
+if [[ -z $DBUS_SESSION_BUS_ADDRESS ]];then
+  # export DBUS_SESSION_BUS_ADDRESS environment variable
+  PID=$(pgrep gnome-session)
+  export DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS /proc/$PID/environ|cut -d= -f2-)
+fi
+
+/usr/bin/gsettings set org.gnome.desktop.background picture-uri "file://$selection"
