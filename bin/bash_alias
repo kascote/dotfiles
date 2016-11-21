@@ -32,6 +32,8 @@ alias egrep='egrep --color=auto'
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
 alias apti="aptitude -F \"%c%a%M%S %p %d %Z %v %V\" search "  # show the instaled version and the available one
+alias t=tmux
+alias v=nvim
 
 alias psgrep='ps aux | grep -v grep | grep -i -e VSZ -e'
 alias le='less -fir'
@@ -61,9 +63,9 @@ alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/La
 alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
 
 # One of @janmoesen’s ProTip™s
-for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-  alias "$method"="lwp-request -m '$method'"
-done
+#for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+#  alias "$method"="lwp-request -m '$method'"
+#done
 
 
 # --------[ Rails ]-----------------------------------------------------------------
