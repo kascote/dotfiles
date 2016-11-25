@@ -61,6 +61,8 @@ alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date
 alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -kill -r -domain local -domain system -domain user && killall Finder"
 
 alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
+alias oports='netstat -tulanp'
+alias free="free -h -l -t"
 
 # One of @janmoesen’s ProTip™s
 #for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
