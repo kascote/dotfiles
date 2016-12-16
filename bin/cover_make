@@ -1,0 +1,3 @@
+#!/bin/sh
+
+convert -strip -interlace Plane -gaussian-blur 0.05 -quality 85% -resize 800x600 cover.jpg cover2.jpg

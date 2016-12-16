@@ -81,7 +81,7 @@ alias rrestart='touch tmp/restart.txt'
 alias vbs="VBoxHeadless -v off -s "
 alias vboxl="VBoxManage list vms"
 alias vboxlr="VBoxManage list runningvms"
-
+alias vssh="vagrant ssh -- -R 8377:localhost:8377"
 
 # --------[ GIT ]-----------------------------------------------------------------
 alias gw="git whatchanged -p"

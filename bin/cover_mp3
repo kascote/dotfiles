@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for i in *.mp3
+do
+eyeD3 --add-image cover.jpg:FRONT_COVER "$i"
+done
