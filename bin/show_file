@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#   - CTRL-l show content of file
+#   - CTRL-E or Enter key to open with the $EDITOR
+
+
+notes() {
+  local out file key
+  if [[ "$TMUX" ]]; then
+    IFS=$'\n' out=($(fzf-tmux --query="$1" --exit-0 --expect=ctrl-l,ctrl-e))
+  else
+    IFS=$'\n' out=($(fzf --query="$1" --exit-0 --expect=ctrl-l,ctrl-e))
+  fi
+  key=${out[0]}
+  file=${out[1]}
+
+  if [[ -z "$file" ]] && [[ -z "$key" ]]; then
+    exit
+  fi
+
+  if [ -n "$file" ]; then
+    [ "$key" = ctrl-l ] && cat "$file" || ${EDITOR:-vim} "$file"
+  else
+    ${EDITOR:-vim} "$key"
+  fi
+}
+
+notes $1
+
