@@ -48,10 +48,12 @@
   sba = "!f() { git subtree add --prefix $2 $1 master --squash; }; f"
   # the acronym stands for "subtree update"
   sbu = "!f() { git subtree pull --prefix $2 $1 master --squash; }; f"
+  showtool = "!f() { git difftool $1^ $1; }; f"
+  added = difftool --cached
 [core]
   editor = vim
   excludesfile = ~/.cvsignore
-  pager = bash -ci 'diff-highlight | strip_diff_leading_symbols | less -r' -
+  # pager = bash -ci 'diff-highlight | strip_diff_leading_symbols | less -r' -
 [apply]
   whitespace = nowarn
 [push]
@@ -62,15 +64,16 @@
   history-view-vpane-position = 595
   file-view-vpane-position = 428
   main-window-view = HistoryView
-[difftool "sourcetree"]
-  cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-  path =
-[mergetool "sourcetree"]
-  cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-  trustExitCode = true
 [color "diff-highlight"]
   oldNormal = "red bold"
   oldHighlight = "red bold 52"
   newNormal = "green bold"
   newHighlight = "green bold 22"
-
+[diff]
+  tool = icdiff
+[difftool]
+  prompt = false
+[difftool "icdiff"]
+  cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
+[pager]
+  difftool = true
