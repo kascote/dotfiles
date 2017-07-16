@@ -1,13 +1,7 @@
 #!/bin/bash
 
-UPT=''
-
-if [ -n "$TMUX" ]; then
-  UPT='\x1bPtmux;\x1b'
-fi
-
-SFG=$UPT'\x1b[38;2;'
-SBG=$UPT'\x1b[48;2;'
+SFG='\x1b[38;2;'
+SBG='\x1b[48;2;'
 
 sbg()
 {
