@@ -1,0 +1,4 @@
+if ! tmux has-session -t cmus 2>/dev/null; then
+    tmux new-session -s cmus -d -n cmus -d "/usr/bin/cmus $@"
+fi
+tmux attach -d -t cmus
