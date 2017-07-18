@@ -24,4 +24,7 @@
 \set ON_ERROR_ROLLBACK interactive
 \set VERBOSITY verbose
 
+\pset linestyle unicode
+\pset border 7
+
 \unset QUIET
