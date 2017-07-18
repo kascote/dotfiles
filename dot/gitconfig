@@ -51,7 +51,7 @@
 [core]
   editor = vim
   excludesfile = ~/.cvsignore
-  pager = bash -ci 'diff-highlight | strip_diff_leading_symbols | less -r' -
+  #pager = bash -ci 'diff-highlight | strip_diff_leading_symbols | less -r' -
 [apply]
   whitespace = nowarn
 [push]
