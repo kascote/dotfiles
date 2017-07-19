@@ -77,5 +77,12 @@ Pry.hooks.add_hook :after_session, :rails do |output, target, pry|
   Rails.logger = org_logger_rails if org_logger_rails
 end
 
+if defined?(PryByebug)
+  Pry.commands.alias_command 'cc', 'continue'
+  Pry.commands.alias_command 'ss', 'step'
+  Pry.commands.alias_command 'nn', 'next'
+  Pry.commands.alias_command 'ff', 'finish'
+end
+
 
 # coding:utf-8 vim:ft=ruby
