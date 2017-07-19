@@ -24,8 +24,8 @@ alias ....='cd ../../..'                     # move up 3 dirs
 alias .....='cd ../../../..'                 # move up 4 dirs
 alias rbash='source ~/bin/bash_alias'        # after editing you have to source it for the new stuff to work
 alias reload='source ~/.bashrc'
-alias ducks='du -cksh * | sort -rn|head -11' # Lists folders and files sizes in the current folder
-alias du1='du -h --max-depth=1'
+alias dut='du -cksh * | sort -rn | head -11' # Lists folders and files sizes in the current folder
+alias dfu='df -hT -x devtmpfs -x tmpfs'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
@@ -63,6 +63,15 @@ alias lscleanup="/System/Library/Frameworks/CoreServices.framework/Frameworks/La
 alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
 alias oports='netstat -tulanp'
 alias free="free -h -l -t"
+
+alias xsay="espeak -v english -s160 -p20 ${1}"
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+alias yank='xsel -ib --logfile "$XDG_CACHE_HOME/xsel.log"'
+alias put='xsel -ob --logfile "$XDG_CACHE_HOME/xsel.log"'
+alias fontcache='fc-cache -f -v'
 
 # One of @janmoesen’s ProTip™s
 #for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
@@ -119,10 +128,6 @@ alias unmute="osascript -e 'set volume output muted false'"
 # Pin to the tail of long commands for an audible alert after long processes
 # curl http://downloads.com/hugefile.zip; lmk
 alias lmk="say 'Process complete.'"
-alias xsay="espeak -v mb-en1 -s 140 ${1}"
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile

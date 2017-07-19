@@ -1,0 +1,51 @@
+#!/bin/bash
+
+bold=$(tput bold)
+reset=$(tput sgr0)
+#black=$(tput setaf 0)
+#blue=$(tput setaf 33)
+#cyan=$(tput setaf 37)
+green=$(tput setaf 190)
+#orange=$(tput setaf 172)
+#purple=$(tput setaf 141)
+#red=$(tput setaf 124)
+violet=$(tput setaf 61)
+#magenta=$(tput setaf 9)
+#white=$(tput setaf 8)
+#yellow=$(tput setaf 136)
+
+
+#declare -A DNS_LIST
+CMD="dig +short a"
+#DNS_LIST["google"]="8.8.8.8"
+#DNS_LIST["telecentro"]="190.55.60.129"
+
+DNS_LIST=( "telecentro:190.55.60.129"
+           "telecentro-2:200.115.192.28"
+           "telecom:186.109.81.220"
+           "iplan:200.69.193.2"
+           "iplan-2:200.69.210.9"
+           "telmex:190.221.174.131"
+           "impsat:64.76.25.103"
+           "indexport:200.69.140.107"
+           "sion:200.69.34.102"
+           "nortech:190.181.112.131"
+           "mendoza:200.5.118.6"
+           "winhosting:200.110.156.5"
+           "google:8.8.8.8"
+           "dyn:216.146.35.35"
+           "ultradns:156.154.71.1"
+           "comodo:8.26.56.26"
+           "lvl3:4.2.2.1"
+           "lvl3-2:4.2.2.4"
+           )
+
+
+for dns in "${DNS_LIST[@]}"; do
+  name=${dns%%:*}
+  ip=${dns#*:}
+  cmd="${CMD} $1 @$ip"
+  echo "${violet}>> ${bold}$name${reset}:${bold}${green} $($cmd)"
+done
+
+echo "${reset}"

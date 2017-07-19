@@ -6,7 +6,7 @@ case $- in
       *) return;;
 esac
 
-if [[ $TERMINIX_ID ]]; then
+if [[ $TILIX_ID ]]; then
   source /etc/profile.d/vte.sh
 fi
 
@@ -52,6 +52,9 @@ shopt -s cdspell 2> /dev/null
 # match all files and zero or more directories and subdirectories.
 shopt -s globstar
 
+# not to be disturbed by Ctrl-S ctrl-Q in terminals:
+stty -ixon
+
 # Prevent file overwrite on stdout redirection
 # Use `>|` to force redirection to an existing file
 set -o noclobber
@@ -75,6 +78,8 @@ shopt -s cdable_vars
 # export documents="$HOME/Documents"
 # export dropbox="$HOME/Dropbox"
 
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+
 # vim:ft=sh
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash

@@ -7,3 +7,6 @@
 gsettings set org.gnome.desktop.interface cursor-blink false
 
 gsettings set org.gnome.shell.app-switcher current-workspace-only true
+
+gsettings set org.gnome.desktop.background primary-color '#1d2021'
+gsettings set org.gnome.desktop.background secondary-color '#1d2021'
