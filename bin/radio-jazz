@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [[ -z "${TMUX}" ]]; then
+
+  if ! tmux has-session -t jazz 2>/dev/null; then
+      tmux new-session -s jazz -d -n jazz -d "/usr/bin/mpv http://radio.1jazz.ru:8070/radio"
+  fi
+  tmux attach-session -d -t jazz
+
+fi
+
+
+

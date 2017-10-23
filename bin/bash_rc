@@ -80,6 +80,16 @@ shopt -s cdable_vars
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# TMUX
+#if which tmux >/dev/null 2>&1; then
+  # if no session is started, start a new session
+  # if not inside a tmux session, and if no session is started, start a new session
+#  test -z "${TMUX}" && (tmux new-session -A -s dev)
+
+#fi
+
+
+
 
 # vim:ft=sh
 

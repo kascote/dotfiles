@@ -1,30 +1,39 @@
-#require '~/.irb/irb/gem_loader'
-#require '~/.irb/irb/awesome_print_loader'
 
-Pry.config.editor = "mvim --nofork"
-
-#if defined?(Rails) && Rails.env
-#  require 'logger'
-#
-#  if defined?(ActiveRecord)
-#    ActiveRecord::Base.logger = Logger.new(STDOUT)
-#    ActiveRecord::Base.clear_active_connections!
-#  end
-#
-#  if defined?(DataMapper)
-#    DataMapper::Logger.new($stdout, :debug)
-#  end
-#end
-
-
+Pry.config.editor               = "mvim --nofork"
 #Pry.config.pager = false
-Pry.config.color = true
-Pry.config.history.should_save = true
+Pry.config.color                = true
+Pry.config.history.should_save  = true
 Pry.config.should_load_local_rc = Dir.pwd != Dir.home
+
+Pry.config.ls.separator              = "\n" # new lines between methods
+Pry.config.ls.heading_color          = :magenta
+Pry.config.ls.public_method_color    = :green
+Pry.config.ls.protected_method_color = :yellow
+Pry.config.ls.private_method_color   = :bright_red
+
+
+# pry debugger
+Pry.commands.alias_command 'cc', 'continue' rescue nil
+Pry.commands.alias_command 'ss', 'step' rescue nil
+Pry.commands.alias_command 'nn', 'next' rescue nil
+
 
 if Readline::VERSION =~ /editline/i
   warn "Warning: Using Editline instead of Readline."
 end
+
+begin
+  require 'awesome_print'
+  # The following line enables awesome_print for all pry output,
+  # and it also enables paging
+  Pry.config.print = proc {|output, value| Pry::Helpers::BaseHelpers.stagger_output("=> #{value.ai}", output)}
+
+  # If you want awesome_print without automatic pagination, use the line below
+  # Pry.config.print = proc { |output, value| output.puts value.ai }
+rescue LoadError => err
+  puts "gem install awesome_print  # <-- highly recommended"
+end
+
 
 # wrap ANSI codes so Readline knows where the prompt ends
 def colour(name, text)
@@ -35,12 +44,6 @@ def colour(name, text)
   end
 end
 
-=begin
-Pry.prompt = [
-  proc { |obj, nest_level| "#{RUBY_VERSION} (#{obj}):#{nest_level} > " },
-  proc { |obj, nest_level| "#{RUBY_VERSION} (#{obj}):#{nest_level} * " }
-]
-=end
 
 Pry.config.prompt = [
   proc { |target_self, nest_level, pry|
@@ -76,6 +79,5 @@ Pry.hooks.add_hook :after_session, :rails do |output, target, pry|
   ActiveRecord::Base.logger = org_logger_active_record if org_logger_active_record
   Rails.logger = org_logger_rails if org_logger_rails
 end
-
 
 # coding:utf-8 vim:ft=ruby

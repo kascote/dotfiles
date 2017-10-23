@@ -13,6 +13,8 @@ set completion-ignore-case on
 set completion-map-case on
 # List all matches in case multiple possible completions are possible
 set show-all-if-ambiguous on
+# List all matches in case multiple possible completions are not possible
+set show-all-if-unmodified On
 # Immediately add a trailing slash when autocompleting symlinks to directories
 set mark-symlinked-directories on
 # Use the text that has already been typed as the prefix for searching through
@@ -37,6 +39,11 @@ set skip-completed-text on
 set meta-flag on
 set input-meta on
 set output-meta on
-set convert-meta off
+set convert-meta on
 # disable bell
 set bell-style none
+# on long file names, show ellipsis prefix
+set completion-prefix-display-length 3
+# This line sets readline to display possible completions using different colors to indicate their file types
+set colored-stats on
+
